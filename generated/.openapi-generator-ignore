@@ -1,0 +1,11 @@
+docs/**
+test/**
+api/**
+.github/**
+.travis.yml
+.gitlab-ci.yml
+git_push.sh
+.gitignore
+README.md
+go.mod
+go.sum

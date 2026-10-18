@@ -1,0 +1,85 @@
+name: CI
+
+# Pull requests into main, and release.yml before it publishes. Validate
+# locally before opening a pull request.
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    # The committed generated package must be exactly what openapi/v1.json
+    # produces. A hand edit to it, or a contract change without regenerating,
+    # fails here.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/generate.sh
+      - name: Generated code matches the contract
+        run: |
+          if [ -n "$(git status --porcelain -- generated)" ]; then
+            echo "::error::generated/ does not match openapi/v1.json. Run ./scripts/generate.sh and commit the result."
+            git status --short -- generated | head -50
+            exit 1
+          fi
+
+  readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_readme.py
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # The minimum the module declares, and the current release.
+        go-version: ["1.23", "stable"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: go.mod and go.sum are tidy
+        run: go mod tidy -diff
+      - name: Code is gofmt-clean
+        run: test -z "$(gofmt -l .)" || { gofmt -l .; exit 1; }
+      - run: go build ./...
+      - run: go vet ./...
+      - run: go test -race ./...
+      - name: staticcheck (hand-written packages; generated code is the generator's)
+        # On the pinned toolchain, not `stable`: staticcheck reads the
+        # compiler's export data, so a pinned staticcheck breaks each time
+        # `stable` moves to a Go release newer than it knows. Pinned tool on a
+        # pinned toolchain gives the same answer every run.
+        if: matrix.go-version == '1.23'
+        run: go run honnef.co/go/tools/cmd/staticcheck@2025.1.1 ./client/... ./live/...
+
+  dco:
+    # Every commit carries a Signed-off-by line from its author. See
+    # CONTRIBUTING.md in guardiano3/.github. Pull requests only: a release
+    # builds a commit that already passed this on its way into main.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Every commit is signed off by its author
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          bad=0
+          for c in $(git rev-list --no-merges "$BASE..$HEAD"); do
+            author="$(git log -1 --format='%an <%ae>' "$c")"
+            if ! git log -1 --format=%B "$c" | grep -qF "Signed-off-by: $author"; then
+              echo "::error::$(git log -1 --format='%h %s' "$c") is not signed off by $author (git commit -s)"
+              bad=1
+            fi
+          done
+          exit $bad
