@@ -1,0 +1,67 @@
+name: Release
+
+# Go has no registry: a tag on this repository *is* the release. `go get`
+# fetches it through the module proxy (proxy.golang.org), which reads public
+# repositories only.
+#
+#   v1.2.3        -> the tagged commit passes CI, the module proxy is asked
+#                    for it (so pkg.go.dev lists it), and a GitHub release is
+#                    created
+#   v1.2.3-rc.N   -> the rehearsal: CI on the tagged commit only. Pre-release
+#                    tags are valid Go versions too, so they are not handed to
+#                    the proxy
+#
+# To release: update the CHANGELOG heading through a reviewed pull request,
+# then tag the merge commit (there is no version file). All four SDKs are
+# released together, at the same version.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    # The same gates as a pull request, against exactly the tagged commit.
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    if: ${{ !contains(github.ref_name, '-') }}
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: The tag is a semantic version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          echo "$TAG" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$' || {
+            echo "::error::$TAG is not vMAJOR.MINOR.PATCH"; exit 1; }
+
+      - name: Ask the module proxy for the new version
+        # Public repositories only: the proxy cannot read a private one.
+        if: ${{ !github.event.repository.private }}
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          curl -fsS "https://proxy.golang.org/github.com/guardiano3/guardiano3-go/@v/${TAG}.info"
+          echo
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          awk -v v="$version" '
+            $0 ~ "^## " v "([ (]|$)" { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "See CHANGELOG.md." > notes.md
+          gh release create "$TAG" --verify-tag --title "$TAG" --notes-file notes.md
