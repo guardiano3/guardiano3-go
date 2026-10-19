@@ -1,7 +1,7 @@
 /*
 GuardianO3 API
 
-Real-time scam detection for phone calls.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
+Real-time scam detection for audio and text.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
 
 API version: 1.0.0
 Contact: support@guardiano3.com
@@ -24,11 +24,11 @@ var _ MappedNullable = &SessionResponse{}
 // SessionResponse struct for SessionResponse
 type SessionResponse struct {
 	DetectedKeywords []string       `json:"detectedKeywords,omitempty"`
-	Direction        string         `json:"direction"`
+	Direction        NullableString `json:"direction,omitempty"`
 	Duration         int32          `json:"duration"`
 	FraudType        NullableString `json:"fraudType,omitempty"`
 	Id               string         `json:"id"`
-	PhoneNumber      string         `json:"phoneNumber"`
+	PhoneNumber      NullableString `json:"phoneNumber,omitempty"`
 	RiskLevel        RiskLevel      `json:"riskLevel"`
 	RiskScore        float32        `json:"riskScore"`
 	Summary          NullableString `json:"summary,omitempty"`
@@ -42,12 +42,10 @@ type _SessionResponse SessionResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSessionResponse(direction string, duration int32, id string, phoneNumber string, riskLevel RiskLevel, riskScore float32, timestamp time.Time) *SessionResponse {
+func NewSessionResponse(duration int32, id string, riskLevel RiskLevel, riskScore float32, timestamp time.Time) *SessionResponse {
 	this := SessionResponse{}
-	this.Direction = direction
 	this.Duration = duration
 	this.Id = id
-	this.PhoneNumber = phoneNumber
 	this.RiskLevel = riskLevel
 	this.RiskScore = riskScore
 	this.Timestamp = timestamp
@@ -94,28 +92,47 @@ func (o *SessionResponse) SetDetectedKeywords(v []string) {
 	o.DetectedKeywords = v
 }
 
-// GetDirection returns the Direction field value
+// GetDirection returns the Direction field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SessionResponse) GetDirection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Direction.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.Direction
+	return *o.Direction.Get()
 }
 
-// GetDirectionOk returns a tuple with the Direction field value
+// GetDirectionOk returns a tuple with the Direction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SessionResponse) GetDirectionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Direction, true
+	return o.Direction.Get(), o.Direction.IsSet()
 }
 
-// SetDirection sets field value
+// HasDirection returns a boolean if a field has been set.
+func (o *SessionResponse) HasDirection() bool {
+	if o != nil && o.Direction.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDirection gets a reference to the given NullableString and assigns it to the Direction field.
 func (o *SessionResponse) SetDirection(v string) {
-	o.Direction = v
+	o.Direction.Set(&v)
+}
+
+// SetDirectionNil sets the value for Direction to be an explicit nil
+func (o *SessionResponse) SetDirectionNil() {
+	o.Direction.Set(nil)
+}
+
+// UnsetDirection ensures that no value is present for Direction, not even an explicit nil
+func (o *SessionResponse) UnsetDirection() {
+	o.Direction.Unset()
 }
 
 // GetDuration returns the Duration field value
@@ -209,28 +226,47 @@ func (o *SessionResponse) SetId(v string) {
 	o.Id = v
 }
 
-// GetPhoneNumber returns the PhoneNumber field value
+// GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SessionResponse) GetPhoneNumber() string {
-	if o == nil {
+	if o == nil || IsNil(o.PhoneNumber.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.PhoneNumber
+	return *o.PhoneNumber.Get()
 }
 
-// GetPhoneNumberOk returns a tuple with the PhoneNumber field value
+// GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SessionResponse) GetPhoneNumberOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.PhoneNumber, true
+	return o.PhoneNumber.Get(), o.PhoneNumber.IsSet()
 }
 
-// SetPhoneNumber sets field value
+// HasPhoneNumber returns a boolean if a field has been set.
+func (o *SessionResponse) HasPhoneNumber() bool {
+	if o != nil && o.PhoneNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhoneNumber gets a reference to the given NullableString and assigns it to the PhoneNumber field.
 func (o *SessionResponse) SetPhoneNumber(v string) {
-	o.PhoneNumber = v
+	o.PhoneNumber.Set(&v)
+}
+
+// SetPhoneNumberNil sets the value for PhoneNumber to be an explicit nil
+func (o *SessionResponse) SetPhoneNumberNil() {
+	o.PhoneNumber.Set(nil)
+}
+
+// UnsetPhoneNumber ensures that no value is present for PhoneNumber, not even an explicit nil
+func (o *SessionResponse) UnsetPhoneNumber() {
+	o.PhoneNumber.Unset()
 }
 
 // GetRiskLevel returns the RiskLevel field value
@@ -404,13 +440,17 @@ func (o SessionResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DetectedKeywords) {
 		toSerialize["detectedKeywords"] = o.DetectedKeywords
 	}
-	toSerialize["direction"] = o.Direction
+	if o.Direction.IsSet() {
+		toSerialize["direction"] = o.Direction.Get()
+	}
 	toSerialize["duration"] = o.Duration
 	if o.FraudType.IsSet() {
 		toSerialize["fraudType"] = o.FraudType.Get()
 	}
 	toSerialize["id"] = o.Id
-	toSerialize["phoneNumber"] = o.PhoneNumber
+	if o.PhoneNumber.IsSet() {
+		toSerialize["phoneNumber"] = o.PhoneNumber.Get()
+	}
 	toSerialize["riskLevel"] = o.RiskLevel
 	toSerialize["riskScore"] = o.RiskScore
 	if o.Summary.IsSet() {
@@ -428,10 +468,8 @@ func (o *SessionResponse) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"direction",
 		"duration",
 		"id",
-		"phoneNumber",
 		"riskLevel",
 		"riskScore",
 		"timestamp",

@@ -1,7 +1,7 @@
 /*
 GuardianO3 API
 
-Real-time scam detection for phone calls.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
+Real-time scam detection for audio and text.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
 
 API version: 1.0.0
 Contact: support@guardiano3.com
@@ -12,9 +12,7 @@ Contact: support@guardiano3.com
 package guardiano3
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the SessionCreateRequest type satisfies the MappedNullable interface at compile time
@@ -22,21 +20,17 @@ var _ MappedNullable = &SessionCreateRequest{}
 
 // SessionCreateRequest struct for SessionCreateRequest
 type SessionCreateRequest struct {
-	Direction   string         `json:"direction" validate:"regexp=^(incoming|outgoing)$"`
+	Direction   NullableString `json:"direction,omitempty" validate:"regexp=^(incoming|outgoing)$"`
 	Language    NullableString `json:"language,omitempty"`
-	PhoneNumber string         `json:"phoneNumber" validate:"regexp=^\\\\+?[0-9 ()\\\\-.]{3,32}$"`
+	PhoneNumber NullableString `json:"phoneNumber,omitempty" validate:"regexp=^\\\\+?[0-9 ()\\\\-.]{3,32}$"`
 }
-
-type _SessionCreateRequest SessionCreateRequest
 
 // NewSessionCreateRequest instantiates a new SessionCreateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSessionCreateRequest(direction string, phoneNumber string) *SessionCreateRequest {
+func NewSessionCreateRequest() *SessionCreateRequest {
 	this := SessionCreateRequest{}
-	this.Direction = direction
-	this.PhoneNumber = phoneNumber
 	return &this
 }
 
@@ -48,28 +42,47 @@ func NewSessionCreateRequestWithDefaults() *SessionCreateRequest {
 	return &this
 }
 
-// GetDirection returns the Direction field value
+// GetDirection returns the Direction field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SessionCreateRequest) GetDirection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Direction.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.Direction
+	return *o.Direction.Get()
 }
 
-// GetDirectionOk returns a tuple with the Direction field value
+// GetDirectionOk returns a tuple with the Direction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SessionCreateRequest) GetDirectionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Direction, true
+	return o.Direction.Get(), o.Direction.IsSet()
 }
 
-// SetDirection sets field value
+// HasDirection returns a boolean if a field has been set.
+func (o *SessionCreateRequest) HasDirection() bool {
+	if o != nil && o.Direction.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDirection gets a reference to the given NullableString and assigns it to the Direction field.
 func (o *SessionCreateRequest) SetDirection(v string) {
-	o.Direction = v
+	o.Direction.Set(&v)
+}
+
+// SetDirectionNil sets the value for Direction to be an explicit nil
+func (o *SessionCreateRequest) SetDirectionNil() {
+	o.Direction.Set(nil)
+}
+
+// UnsetDirection ensures that no value is present for Direction, not even an explicit nil
+func (o *SessionCreateRequest) UnsetDirection() {
+	o.Direction.Unset()
 }
 
 // GetLanguage returns the Language field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -115,28 +128,47 @@ func (o *SessionCreateRequest) UnsetLanguage() {
 	o.Language.Unset()
 }
 
-// GetPhoneNumber returns the PhoneNumber field value
+// GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SessionCreateRequest) GetPhoneNumber() string {
-	if o == nil {
+	if o == nil || IsNil(o.PhoneNumber.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.PhoneNumber
+	return *o.PhoneNumber.Get()
 }
 
-// GetPhoneNumberOk returns a tuple with the PhoneNumber field value
+// GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SessionCreateRequest) GetPhoneNumberOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.PhoneNumber, true
+	return o.PhoneNumber.Get(), o.PhoneNumber.IsSet()
 }
 
-// SetPhoneNumber sets field value
+// HasPhoneNumber returns a boolean if a field has been set.
+func (o *SessionCreateRequest) HasPhoneNumber() bool {
+	if o != nil && o.PhoneNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhoneNumber gets a reference to the given NullableString and assigns it to the PhoneNumber field.
 func (o *SessionCreateRequest) SetPhoneNumber(v string) {
-	o.PhoneNumber = v
+	o.PhoneNumber.Set(&v)
+}
+
+// SetPhoneNumberNil sets the value for PhoneNumber to be an explicit nil
+func (o *SessionCreateRequest) SetPhoneNumberNil() {
+	o.PhoneNumber.Set(nil)
+}
+
+// UnsetPhoneNumber ensures that no value is present for PhoneNumber, not even an explicit nil
+func (o *SessionCreateRequest) UnsetPhoneNumber() {
+	o.PhoneNumber.Unset()
 }
 
 func (o SessionCreateRequest) MarshalJSON() ([]byte, error) {
@@ -149,50 +181,16 @@ func (o SessionCreateRequest) MarshalJSON() ([]byte, error) {
 
 func (o SessionCreateRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["direction"] = o.Direction
+	if o.Direction.IsSet() {
+		toSerialize["direction"] = o.Direction.Get()
+	}
 	if o.Language.IsSet() {
 		toSerialize["language"] = o.Language.Get()
 	}
-	toSerialize["phoneNumber"] = o.PhoneNumber
+	if o.PhoneNumber.IsSet() {
+		toSerialize["phoneNumber"] = o.PhoneNumber.Get()
+	}
 	return toSerialize, nil
-}
-
-func (o *SessionCreateRequest) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"direction",
-		"phoneNumber",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varSessionCreateRequest := _SessionCreateRequest{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSessionCreateRequest)
-
-	if err != nil {
-		return err
-	}
-
-	*o = SessionCreateRequest(varSessionCreateRequest)
-
-	return err
 }
 
 type NullableSessionCreateRequest struct {
