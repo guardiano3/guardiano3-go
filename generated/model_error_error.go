@@ -26,7 +26,7 @@ type ErrorError struct {
 	Code string `json:"code"`
 	// Per-field validation failures, when applicable.
 	Details []ErrorErrorDetailsInner `json:"details,omitempty"`
-	// Deep link to the error-code entry in the published errors reference. Present only when the deployment has `ERROR_DOCS_BASE_URL` configured; omitted otherwise rather than sent blank.
+	// Deep link to the error-code entry in the published errors reference. Omitted, rather than sent blank, when there is no entry to link to.
 	DocsUrl *string `json:"docsUrl,omitempty"`
 	// Human-readable. Not contract: may be reworded at any time.
 	Message string `json:"message"`

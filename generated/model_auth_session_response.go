@@ -21,7 +21,7 @@ import (
 // checks if the AuthSessionResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AuthSessionResponse{}
 
-// AuthSessionResponse A signed-in session (a device), not an analysis session.  Named to disambiguate from `product.SessionResponse`, which is an analysis session. Two Pydantic classes sharing a name is invisible on the server but produces `SchemasV1AuthSessionResponse` as a generated SDK type -- the contract's names are part of its public surface.
+// AuthSessionResponse A signed-in session (a device), not an analysis session (`SessionResponse`).
 type AuthSessionResponse struct {
 	CreatedAt  time.Time      `json:"createdAt"`
 	Current    *bool          `json:"current,omitempty"`
