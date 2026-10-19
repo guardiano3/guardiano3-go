@@ -20,7 +20,7 @@ import (
 // checks if the WebSessionResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &WebSessionResponse{}
 
-// WebSessionResponse Browser login response (ADR-018). No refresh token — it travels in a cookie.
+// WebSessionResponse Browser sign-in response. No refresh token in the body — it is set as a cookie.
 type WebSessionResponse struct {
 	AccessToken string       `json:"accessToken"`
 	ExpiresIn   int32        `json:"expiresIn"`

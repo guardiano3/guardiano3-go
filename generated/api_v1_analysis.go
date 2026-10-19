@@ -47,9 +47,9 @@ func (r ApiAnalyzeAudioV1AnalyzeAudioPostRequest) Execute() (*AnalysisResponse, 
 /*
 AnalyzeAudioV1AnalyzeAudioPost Transcribe and score an audio clip
 
-Requires the `analysis:write` scope. Uploads are capped at `ANALYZE_MAX_UPLOAD_BYTES` and must carry an audio content type. Clips longer than `ANALYZE_MAX_AUDIO_SECONDS` (120 s by default) are refused with `413`, not truncated -- send the part of the audio to be scored, or stream live audio over the session WebSockets in real time. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.
+Requires the `analysis:write` scope. Uploads must carry an audio content type. Uploads larger than 25 MiB and clips longer than 120 seconds are refused with `413`, not truncated -- send the part of the audio to be scored, or stream live audio over the session WebSockets in real time. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.
 
-`Idempotency-Key` is **not** supported here: fingerprinting the payload would mean holding and hashing the whole upload a second time, which doubles the memory cost of the largest request the API accepts. Retry safety for audio comes from the request being stateless -- the audio is not persisted, so a duplicate costs a re-analysis (and counts as a second analysis in analytics), not a duplicate record of the audio.
+`Idempotency-Key` is **not** supported here. Retrying is safe: the audio is not stored, so a duplicate request is analysed again (and counts as a second analysis in analytics) without creating a duplicate record of the audio.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiAnalyzeAudioV1AnalyzeAudioPostRequest

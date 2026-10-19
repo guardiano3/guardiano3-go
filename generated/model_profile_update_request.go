@@ -18,7 +18,7 @@ import (
 // checks if the ProfileUpdateRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ProfileUpdateRequest{}
 
-// ProfileUpdateRequest A PATCH: omit a field to leave it alone. `null` is not a way to clear one.  Both fields were nullable and both crashed the endpoint with a 500 — `{\"name\": null}` violated the column's NOT NULL on commit, and `{\"settings\": null}` made the service iterate a `None`. Any authenticated caller could do it, and the contract said both were acceptable.  Rejecting an explicit null turns those into the 422 the contract already declares. Nothing is lost: neither field has a meaningful empty state — you cannot have no name, and \"no settings\" is not a setting. `exclude_unset` in the handler is what still distinguishes \"not supplied\" from \"supplied\", so omission continues to mean \"leave it alone\".  Found by `tests/integration/test_contract_conformance.py`, which generates exactly this kind of payload and is why property-based testing earns its place next to hand-written cases.
+// ProfileUpdateRequest A PATCH: omit a field to leave it alone. `null` is not a way to clear one.  An explicit `null` is refused with `422`. Neither field has an empty state: an account always has a name, and \"no settings\" is not a setting.
 type ProfileUpdateRequest struct {
 	Name     NullableString             `json:"name,omitempty"`
 	Settings NullableUserSettingsUpdate `json:"settings,omitempty"`
