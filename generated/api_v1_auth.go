@@ -23,45 +23,45 @@ import (
 // V1AuthAPIService V1AuthAPI service
 type V1AuthAPIService service
 
-type ApiChangePasswordV1AuthPasswordPostRequest struct {
+type ApiChangePasswordRequest struct {
 	ctx                   context.Context
 	ApiService            *V1AuthAPIService
 	passwordChangeRequest *PasswordChangeRequest
 }
 
-func (r ApiChangePasswordV1AuthPasswordPostRequest) PasswordChangeRequest(passwordChangeRequest PasswordChangeRequest) ApiChangePasswordV1AuthPasswordPostRequest {
+func (r ApiChangePasswordRequest) PasswordChangeRequest(passwordChangeRequest PasswordChangeRequest) ApiChangePasswordRequest {
 	r.passwordChangeRequest = &passwordChangeRequest
 	return r
 }
 
-func (r ApiChangePasswordV1AuthPasswordPostRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ChangePasswordV1AuthPasswordPostExecute(r)
+func (r ApiChangePasswordRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ChangePasswordExecute(r)
 }
 
 /*
-ChangePasswordV1AuthPasswordPost Change the password
+ChangePassword Change the password
 
 Requires the current password. Signs out every other session; the caller's own session survives.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiChangePasswordV1AuthPasswordPostRequest
+	@return ApiChangePasswordRequest
 */
-func (a *V1AuthAPIService) ChangePasswordV1AuthPasswordPost(ctx context.Context) ApiChangePasswordV1AuthPasswordPostRequest {
-	return ApiChangePasswordV1AuthPasswordPostRequest{
+func (a *V1AuthAPIService) ChangePassword(ctx context.Context) ApiChangePasswordRequest {
+	return ApiChangePasswordRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-func (a *V1AuthAPIService) ChangePasswordV1AuthPasswordPostExecute(r ApiChangePasswordV1AuthPasswordPostRequest) (*http.Response, error) {
+func (a *V1AuthAPIService) ChangePasswordExecute(r ApiChangePasswordRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ChangePasswordV1AuthPasswordPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ChangePassword")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -198,31 +198,31 @@ func (a *V1AuthAPIService) ChangePasswordV1AuthPasswordPostExecute(r ApiChangePa
 	return localVarHTTPResponse, nil
 }
 
-type ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest struct {
+type ApiConfirmEmailChangeRequest struct {
 	ctx              context.Context
 	ApiService       *V1AuthAPIService
 	tokenOnlyRequest *TokenOnlyRequest
 }
 
-func (r ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest) TokenOnlyRequest(tokenOnlyRequest TokenOnlyRequest) ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest {
+func (r ApiConfirmEmailChangeRequest) TokenOnlyRequest(tokenOnlyRequest TokenOnlyRequest) ApiConfirmEmailChangeRequest {
 	r.tokenOnlyRequest = &tokenOnlyRequest
 	return r
 }
 
-func (r ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest) Execute() (*UserResponse, *http.Response, error) {
-	return r.ApiService.ConfirmEmailChangeV1AuthEmailConfirmPostExecute(r)
+func (r ApiConfirmEmailChangeRequest) Execute() (*UserResponse, *http.Response, error) {
+	return r.ApiService.ConfirmEmailChangeExecute(r)
 }
 
 /*
-ConfirmEmailChangeV1AuthEmailConfirmPost Confirm an email address change
+ConfirmEmailChange Confirm an email address change
 
 Signs out every session, since the account identity changed.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest
+	@return ApiConfirmEmailChangeRequest
 */
-func (a *V1AuthAPIService) ConfirmEmailChangeV1AuthEmailConfirmPost(ctx context.Context) ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest {
-	return ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest{
+func (a *V1AuthAPIService) ConfirmEmailChange(ctx context.Context) ApiConfirmEmailChangeRequest {
+	return ApiConfirmEmailChangeRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -231,7 +231,7 @@ func (a *V1AuthAPIService) ConfirmEmailChangeV1AuthEmailConfirmPost(ctx context.
 // Execute executes the request
 //
 //	@return UserResponse
-func (a *V1AuthAPIService) ConfirmEmailChangeV1AuthEmailConfirmPostExecute(r ApiConfirmEmailChangeV1AuthEmailConfirmPostRequest) (*UserResponse, *http.Response, error) {
+func (a *V1AuthAPIService) ConfirmEmailChangeExecute(r ApiConfirmEmailChangeRequest) (*UserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -239,7 +239,7 @@ func (a *V1AuthAPIService) ConfirmEmailChangeV1AuthEmailConfirmPostExecute(r Api
 		localVarReturnValue *UserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ConfirmEmailChangeV1AuthEmailConfirmPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ConfirmEmailChange")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -385,45 +385,45 @@ func (a *V1AuthAPIService) ConfirmEmailChangeV1AuthEmailConfirmPostExecute(r Api
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest struct {
+type ApiConfirmPasswordResetRequest struct {
 	ctx                         context.Context
 	ApiService                  *V1AuthAPIService
 	passwordResetConfirmRequest *PasswordResetConfirmRequest
 }
 
-func (r ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest) PasswordResetConfirmRequest(passwordResetConfirmRequest PasswordResetConfirmRequest) ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest {
+func (r ApiConfirmPasswordResetRequest) PasswordResetConfirmRequest(passwordResetConfirmRequest PasswordResetConfirmRequest) ApiConfirmPasswordResetRequest {
 	r.passwordResetConfirmRequest = &passwordResetConfirmRequest
 	return r
 }
 
-func (r ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest) Execute() (*http.Response, error) {
-	return r.ApiService.ConfirmPasswordResetV1AuthPasswordResetConfirmPostExecute(r)
+func (r ApiConfirmPasswordResetRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ConfirmPasswordResetExecute(r)
 }
 
 /*
-ConfirmPasswordResetV1AuthPasswordResetConfirmPost Complete a password reset
+ConfirmPasswordReset Complete a password reset
 
 Signs out every session, including any the attacker holds.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest
+	@return ApiConfirmPasswordResetRequest
 */
-func (a *V1AuthAPIService) ConfirmPasswordResetV1AuthPasswordResetConfirmPost(ctx context.Context) ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest {
-	return ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest{
+func (a *V1AuthAPIService) ConfirmPasswordReset(ctx context.Context) ApiConfirmPasswordResetRequest {
+	return ApiConfirmPasswordResetRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-func (a *V1AuthAPIService) ConfirmPasswordResetV1AuthPasswordResetConfirmPostExecute(r ApiConfirmPasswordResetV1AuthPasswordResetConfirmPostRequest) (*http.Response, error) {
+func (a *V1AuthAPIService) ConfirmPasswordResetExecute(r ApiConfirmPasswordResetRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ConfirmPasswordResetV1AuthPasswordResetConfirmPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ConfirmPasswordReset")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -560,23 +560,23 @@ func (a *V1AuthAPIService) ConfirmPasswordResetV1AuthPasswordResetConfirmPostExe
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteAccountV1AuthDeleteAccountPostRequest struct {
+type ApiDeleteAccountRequest struct {
 	ctx                  context.Context
 	ApiService           *V1AuthAPIService
 	accountDeleteRequest *AccountDeleteRequest
 }
 
-func (r ApiDeleteAccountV1AuthDeleteAccountPostRequest) AccountDeleteRequest(accountDeleteRequest AccountDeleteRequest) ApiDeleteAccountV1AuthDeleteAccountPostRequest {
+func (r ApiDeleteAccountRequest) AccountDeleteRequest(accountDeleteRequest AccountDeleteRequest) ApiDeleteAccountRequest {
 	r.accountDeleteRequest = &accountDeleteRequest
 	return r
 }
 
-func (r ApiDeleteAccountV1AuthDeleteAccountPostRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteAccountV1AuthDeleteAccountPostExecute(r)
+func (r ApiDeleteAccountRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteAccountExecute(r)
 }
 
 /*
-DeleteAccountV1AuthDeleteAccountPost Delete this account and its data, permanently
+DeleteAccount Delete this account and its data, permanently
 
 Erases the account's personal data: session history and transcripts, feedback labels, sign-in sessions, MFA factors and pending tokens. API keys are revoked. The email address is freed for re-registration.
 
@@ -585,24 +585,24 @@ Erases the account's personal data: session history and transcripts, feedback la
 Requires the current password when the account has one. An account that only ever signed in with a provider has no password to check, so the session itself is the proof.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiDeleteAccountV1AuthDeleteAccountPostRequest
+	@return ApiDeleteAccountRequest
 */
-func (a *V1AuthAPIService) DeleteAccountV1AuthDeleteAccountPost(ctx context.Context) ApiDeleteAccountV1AuthDeleteAccountPostRequest {
-	return ApiDeleteAccountV1AuthDeleteAccountPostRequest{
+func (a *V1AuthAPIService) DeleteAccount(ctx context.Context) ApiDeleteAccountRequest {
+	return ApiDeleteAccountRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-func (a *V1AuthAPIService) DeleteAccountV1AuthDeleteAccountPostExecute(r ApiDeleteAccountV1AuthDeleteAccountPostRequest) (*http.Response, error) {
+func (a *V1AuthAPIService) DeleteAccountExecute(r ApiDeleteAccountRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.DeleteAccountV1AuthDeleteAccountPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.DeleteAccount")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -739,29 +739,29 @@ func (a *V1AuthAPIService) DeleteAccountV1AuthDeleteAccountPostExecute(r ApiDele
 	return localVarHTTPResponse, nil
 }
 
-type ApiGoogleAuthV1AuthGooglePostRequest struct {
+type ApiGoogleAuthRequest struct {
 	ctx               context.Context
 	ApiService        *V1AuthAPIService
 	googleAuthRequest *GoogleAuthRequest
 }
 
-func (r ApiGoogleAuthV1AuthGooglePostRequest) GoogleAuthRequest(googleAuthRequest GoogleAuthRequest) ApiGoogleAuthV1AuthGooglePostRequest {
+func (r ApiGoogleAuthRequest) GoogleAuthRequest(googleAuthRequest GoogleAuthRequest) ApiGoogleAuthRequest {
 	r.googleAuthRequest = &googleAuthRequest
 	return r
 }
 
-func (r ApiGoogleAuthV1AuthGooglePostRequest) Execute() (*TokenResponse, *http.Response, error) {
-	return r.ApiService.GoogleAuthV1AuthGooglePostExecute(r)
+func (r ApiGoogleAuthRequest) Execute() (*TokenResponse, *http.Response, error) {
+	return r.ApiService.GoogleAuthExecute(r)
 }
 
 /*
-GoogleAuthV1AuthGooglePost Sign in with Google
+GoogleAuth Sign in with Google
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGoogleAuthV1AuthGooglePostRequest
+	@return ApiGoogleAuthRequest
 */
-func (a *V1AuthAPIService) GoogleAuthV1AuthGooglePost(ctx context.Context) ApiGoogleAuthV1AuthGooglePostRequest {
-	return ApiGoogleAuthV1AuthGooglePostRequest{
+func (a *V1AuthAPIService) GoogleAuth(ctx context.Context) ApiGoogleAuthRequest {
+	return ApiGoogleAuthRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -770,7 +770,7 @@ func (a *V1AuthAPIService) GoogleAuthV1AuthGooglePost(ctx context.Context) ApiGo
 // Execute executes the request
 //
 //	@return TokenResponse
-func (a *V1AuthAPIService) GoogleAuthV1AuthGooglePostExecute(r ApiGoogleAuthV1AuthGooglePostRequest) (*TokenResponse, *http.Response, error) {
+func (a *V1AuthAPIService) GoogleAuthExecute(r ApiGoogleAuthRequest) (*TokenResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -778,7 +778,7 @@ func (a *V1AuthAPIService) GoogleAuthV1AuthGooglePostExecute(r ApiGoogleAuthV1Au
 		localVarReturnValue *TokenResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.GoogleAuthV1AuthGooglePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.GoogleAuth")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -924,23 +924,23 @@ func (a *V1AuthAPIService) GoogleAuthV1AuthGooglePostExecute(r ApiGoogleAuthV1Au
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListSessionsV1AuthSessionsGetRequest struct {
+type ApiListSessionsRequest struct {
 	ctx        context.Context
 	ApiService *V1AuthAPIService
 }
 
-func (r ApiListSessionsV1AuthSessionsGetRequest) Execute() (*SessionListResponse, *http.Response, error) {
-	return r.ApiService.ListSessionsV1AuthSessionsGetExecute(r)
+func (r ApiListSessionsRequest) Execute() (*SessionListResponse, *http.Response, error) {
+	return r.ApiService.ListSessionsExecute(r)
 }
 
 /*
-ListSessionsV1AuthSessionsGet List active sessions
+ListSessions List active sessions
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListSessionsV1AuthSessionsGetRequest
+	@return ApiListSessionsRequest
 */
-func (a *V1AuthAPIService) ListSessionsV1AuthSessionsGet(ctx context.Context) ApiListSessionsV1AuthSessionsGetRequest {
-	return ApiListSessionsV1AuthSessionsGetRequest{
+func (a *V1AuthAPIService) ListSessions(ctx context.Context) ApiListSessionsRequest {
+	return ApiListSessionsRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -949,7 +949,7 @@ func (a *V1AuthAPIService) ListSessionsV1AuthSessionsGet(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return SessionListResponse
-func (a *V1AuthAPIService) ListSessionsV1AuthSessionsGetExecute(r ApiListSessionsV1AuthSessionsGetRequest) (*SessionListResponse, *http.Response, error) {
+func (a *V1AuthAPIService) ListSessionsExecute(r ApiListSessionsRequest) (*SessionListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -957,7 +957,7 @@ func (a *V1AuthAPIService) ListSessionsV1AuthSessionsGetExecute(r ApiListSession
 		localVarReturnValue *SessionListResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ListSessionsV1AuthSessionsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ListSessions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1098,29 +1098,29 @@ func (a *V1AuthAPIService) ListSessionsV1AuthSessionsGetExecute(r ApiListSession
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLoginV1AuthLoginPostRequest struct {
+type ApiLoginRequest struct {
 	ctx          context.Context
 	ApiService   *V1AuthAPIService
 	loginRequest *LoginRequest
 }
 
-func (r ApiLoginV1AuthLoginPostRequest) LoginRequest(loginRequest LoginRequest) ApiLoginV1AuthLoginPostRequest {
+func (r ApiLoginRequest) LoginRequest(loginRequest LoginRequest) ApiLoginRequest {
 	r.loginRequest = &loginRequest
 	return r
 }
 
-func (r ApiLoginV1AuthLoginPostRequest) Execute() (*TokenResponse, *http.Response, error) {
-	return r.ApiService.LoginV1AuthLoginPostExecute(r)
+func (r ApiLoginRequest) Execute() (*TokenResponse, *http.Response, error) {
+	return r.ApiService.LoginExecute(r)
 }
 
 /*
-LoginV1AuthLoginPost Sign in
+Login Sign in
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiLoginV1AuthLoginPostRequest
+	@return ApiLoginRequest
 */
-func (a *V1AuthAPIService) LoginV1AuthLoginPost(ctx context.Context) ApiLoginV1AuthLoginPostRequest {
-	return ApiLoginV1AuthLoginPostRequest{
+func (a *V1AuthAPIService) Login(ctx context.Context) ApiLoginRequest {
+	return ApiLoginRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1129,7 +1129,7 @@ func (a *V1AuthAPIService) LoginV1AuthLoginPost(ctx context.Context) ApiLoginV1A
 // Execute executes the request
 //
 //	@return TokenResponse
-func (a *V1AuthAPIService) LoginV1AuthLoginPostExecute(r ApiLoginV1AuthLoginPostRequest) (*TokenResponse, *http.Response, error) {
+func (a *V1AuthAPIService) LoginExecute(r ApiLoginRequest) (*TokenResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1137,7 +1137,7 @@ func (a *V1AuthAPIService) LoginV1AuthLoginPostExecute(r ApiLoginV1AuthLoginPost
 		localVarReturnValue *TokenResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.LoginV1AuthLoginPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.Login")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1283,43 +1283,43 @@ func (a *V1AuthAPIService) LoginV1AuthLoginPostExecute(r ApiLoginV1AuthLoginPost
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiLogoutV1AuthLogoutPostRequest struct {
+type ApiLogoutRequest struct {
 	ctx           context.Context
 	ApiService    *V1AuthAPIService
 	logoutRequest *LogoutRequest
 }
 
-func (r ApiLogoutV1AuthLogoutPostRequest) LogoutRequest(logoutRequest LogoutRequest) ApiLogoutV1AuthLogoutPostRequest {
+func (r ApiLogoutRequest) LogoutRequest(logoutRequest LogoutRequest) ApiLogoutRequest {
 	r.logoutRequest = &logoutRequest
 	return r
 }
 
-func (r ApiLogoutV1AuthLogoutPostRequest) Execute() (*http.Response, error) {
-	return r.ApiService.LogoutV1AuthLogoutPostExecute(r)
+func (r ApiLogoutRequest) Execute() (*http.Response, error) {
+	return r.ApiService.LogoutExecute(r)
 }
 
 /*
-LogoutV1AuthLogoutPost Sign out of the current session
+Logout Sign out of the current session
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiLogoutV1AuthLogoutPostRequest
+	@return ApiLogoutRequest
 */
-func (a *V1AuthAPIService) LogoutV1AuthLogoutPost(ctx context.Context) ApiLogoutV1AuthLogoutPostRequest {
-	return ApiLogoutV1AuthLogoutPostRequest{
+func (a *V1AuthAPIService) Logout(ctx context.Context) ApiLogoutRequest {
+	return ApiLogoutRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-func (a *V1AuthAPIService) LogoutV1AuthLogoutPostExecute(r ApiLogoutV1AuthLogoutPostRequest) (*http.Response, error) {
+func (a *V1AuthAPIService) LogoutExecute(r ApiLogoutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.LogoutV1AuthLogoutPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.Logout")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1456,23 +1456,23 @@ func (a *V1AuthAPIService) LogoutV1AuthLogoutPostExecute(r ApiLogoutV1AuthLogout
 	return localVarHTTPResponse, nil
 }
 
-type ApiMeV1AuthMeGetRequest struct {
+type ApiMeRequest struct {
 	ctx        context.Context
 	ApiService *V1AuthAPIService
 }
 
-func (r ApiMeV1AuthMeGetRequest) Execute() (*UserResponse, *http.Response, error) {
-	return r.ApiService.MeV1AuthMeGetExecute(r)
+func (r ApiMeRequest) Execute() (*UserResponse, *http.Response, error) {
+	return r.ApiService.MeExecute(r)
 }
 
 /*
-MeV1AuthMeGet The signed-in user
+Me The signed-in user
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiMeV1AuthMeGetRequest
+	@return ApiMeRequest
 */
-func (a *V1AuthAPIService) MeV1AuthMeGet(ctx context.Context) ApiMeV1AuthMeGetRequest {
-	return ApiMeV1AuthMeGetRequest{
+func (a *V1AuthAPIService) Me(ctx context.Context) ApiMeRequest {
+	return ApiMeRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1481,7 +1481,7 @@ func (a *V1AuthAPIService) MeV1AuthMeGet(ctx context.Context) ApiMeV1AuthMeGetRe
 // Execute executes the request
 //
 //	@return UserResponse
-func (a *V1AuthAPIService) MeV1AuthMeGetExecute(r ApiMeV1AuthMeGetRequest) (*UserResponse, *http.Response, error) {
+func (a *V1AuthAPIService) MeExecute(r ApiMeRequest) (*UserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1489,7 +1489,7 @@ func (a *V1AuthAPIService) MeV1AuthMeGetExecute(r ApiMeV1AuthMeGetRequest) (*Use
 		localVarReturnValue *UserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.MeV1AuthMeGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.Me")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1630,31 +1630,31 @@ func (a *V1AuthAPIService) MeV1AuthMeGetExecute(r ApiMeV1AuthMeGetRequest) (*Use
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRefreshV1AuthRefreshPostRequest struct {
+type ApiRefreshRequest struct {
 	ctx            context.Context
 	ApiService     *V1AuthAPIService
 	refreshRequest *RefreshRequest
 }
 
-func (r ApiRefreshV1AuthRefreshPostRequest) RefreshRequest(refreshRequest RefreshRequest) ApiRefreshV1AuthRefreshPostRequest {
+func (r ApiRefreshRequest) RefreshRequest(refreshRequest RefreshRequest) ApiRefreshRequest {
 	r.refreshRequest = &refreshRequest
 	return r
 }
 
-func (r ApiRefreshV1AuthRefreshPostRequest) Execute() (*TokenResponse, *http.Response, error) {
-	return r.ApiService.RefreshV1AuthRefreshPostExecute(r)
+func (r ApiRefreshRequest) Execute() (*TokenResponse, *http.Response, error) {
+	return r.ApiService.RefreshExecute(r)
 }
 
 /*
-RefreshV1AuthRefreshPost Exchange a refresh token
+Refresh Exchange a refresh token
 
 Refresh tokens are single-use. Each exchange returns a new pair and invalidates the one presented. Presenting an already-used token signs the whole session lineage out.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRefreshV1AuthRefreshPostRequest
+	@return ApiRefreshRequest
 */
-func (a *V1AuthAPIService) RefreshV1AuthRefreshPost(ctx context.Context) ApiRefreshV1AuthRefreshPostRequest {
-	return ApiRefreshV1AuthRefreshPostRequest{
+func (a *V1AuthAPIService) Refresh(ctx context.Context) ApiRefreshRequest {
+	return ApiRefreshRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1663,7 +1663,7 @@ func (a *V1AuthAPIService) RefreshV1AuthRefreshPost(ctx context.Context) ApiRefr
 // Execute executes the request
 //
 //	@return TokenResponse
-func (a *V1AuthAPIService) RefreshV1AuthRefreshPostExecute(r ApiRefreshV1AuthRefreshPostRequest) (*TokenResponse, *http.Response, error) {
+func (a *V1AuthAPIService) RefreshExecute(r ApiRefreshRequest) (*TokenResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1671,7 +1671,7 @@ func (a *V1AuthAPIService) RefreshV1AuthRefreshPostExecute(r ApiRefreshV1AuthRef
 		localVarReturnValue *TokenResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RefreshV1AuthRefreshPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.Refresh")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1817,31 +1817,31 @@ func (a *V1AuthAPIService) RefreshV1AuthRefreshPostExecute(r ApiRefreshV1AuthRef
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRegisterV1AuthRegisterPostRequest struct {
+type ApiRegisterRequest struct {
 	ctx             context.Context
 	ApiService      *V1AuthAPIService
 	registerRequest *RegisterRequest
 }
 
-func (r ApiRegisterV1AuthRegisterPostRequest) RegisterRequest(registerRequest RegisterRequest) ApiRegisterV1AuthRegisterPostRequest {
+func (r ApiRegisterRequest) RegisterRequest(registerRequest RegisterRequest) ApiRegisterRequest {
 	r.registerRequest = &registerRequest
 	return r
 }
 
-func (r ApiRegisterV1AuthRegisterPostRequest) Execute() (*AcceptedResponse, *http.Response, error) {
-	return r.ApiService.RegisterV1AuthRegisterPostExecute(r)
+func (r ApiRegisterRequest) Execute() (*AcceptedResponse, *http.Response, error) {
+	return r.ApiService.RegisterExecute(r)
 }
 
 /*
-RegisterV1AuthRegisterPost Create an account
+Register Create an account
 
 Always returns 202 with the same body, whether or not the address is already registered. No session is issued: confirm the emailed link first, then sign in.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRegisterV1AuthRegisterPostRequest
+	@return ApiRegisterRequest
 */
-func (a *V1AuthAPIService) RegisterV1AuthRegisterPost(ctx context.Context) ApiRegisterV1AuthRegisterPostRequest {
-	return ApiRegisterV1AuthRegisterPostRequest{
+func (a *V1AuthAPIService) Register(ctx context.Context) ApiRegisterRequest {
+	return ApiRegisterRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1850,7 +1850,7 @@ func (a *V1AuthAPIService) RegisterV1AuthRegisterPost(ctx context.Context) ApiRe
 // Execute executes the request
 //
 //	@return AcceptedResponse
-func (a *V1AuthAPIService) RegisterV1AuthRegisterPostExecute(r ApiRegisterV1AuthRegisterPostRequest) (*AcceptedResponse, *http.Response, error) {
+func (a *V1AuthAPIService) RegisterExecute(r ApiRegisterRequest) (*AcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -1858,7 +1858,7 @@ func (a *V1AuthAPIService) RegisterV1AuthRegisterPostExecute(r ApiRegisterV1Auth
 		localVarReturnValue *AcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RegisterV1AuthRegisterPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.Register")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2004,31 +2004,31 @@ func (a *V1AuthAPIService) RegisterV1AuthRegisterPostExecute(r ApiRegisterV1Auth
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRequestEmailChangeV1AuthEmailPostRequest struct {
+type ApiRequestEmailChangeRequest struct {
 	ctx                context.Context
 	ApiService         *V1AuthAPIService
 	emailChangeRequest *EmailChangeRequest
 }
 
-func (r ApiRequestEmailChangeV1AuthEmailPostRequest) EmailChangeRequest(emailChangeRequest EmailChangeRequest) ApiRequestEmailChangeV1AuthEmailPostRequest {
+func (r ApiRequestEmailChangeRequest) EmailChangeRequest(emailChangeRequest EmailChangeRequest) ApiRequestEmailChangeRequest {
 	r.emailChangeRequest = &emailChangeRequest
 	return r
 }
 
-func (r ApiRequestEmailChangeV1AuthEmailPostRequest) Execute() (*AcceptedResponse, *http.Response, error) {
-	return r.ApiService.RequestEmailChangeV1AuthEmailPostExecute(r)
+func (r ApiRequestEmailChangeRequest) Execute() (*AcceptedResponse, *http.Response, error) {
+	return r.ApiService.RequestEmailChangeExecute(r)
 }
 
 /*
-RequestEmailChangeV1AuthEmailPost Request an email address change
+RequestEmailChange Request an email address change
 
 Requires the current password. The account keeps its existing address until the new one is confirmed. Answers 202 even when the target address is already in use, so an authenticated session cannot be used to scan for registered addresses.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRequestEmailChangeV1AuthEmailPostRequest
+	@return ApiRequestEmailChangeRequest
 */
-func (a *V1AuthAPIService) RequestEmailChangeV1AuthEmailPost(ctx context.Context) ApiRequestEmailChangeV1AuthEmailPostRequest {
-	return ApiRequestEmailChangeV1AuthEmailPostRequest{
+func (a *V1AuthAPIService) RequestEmailChange(ctx context.Context) ApiRequestEmailChangeRequest {
+	return ApiRequestEmailChangeRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -2037,7 +2037,7 @@ func (a *V1AuthAPIService) RequestEmailChangeV1AuthEmailPost(ctx context.Context
 // Execute executes the request
 //
 //	@return AcceptedResponse
-func (a *V1AuthAPIService) RequestEmailChangeV1AuthEmailPostExecute(r ApiRequestEmailChangeV1AuthEmailPostRequest) (*AcceptedResponse, *http.Response, error) {
+func (a *V1AuthAPIService) RequestEmailChangeExecute(r ApiRequestEmailChangeRequest) (*AcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -2045,7 +2045,7 @@ func (a *V1AuthAPIService) RequestEmailChangeV1AuthEmailPostExecute(r ApiRequest
 		localVarReturnValue *AcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RequestEmailChangeV1AuthEmailPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RequestEmailChange")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2191,29 +2191,29 @@ func (a *V1AuthAPIService) RequestEmailChangeV1AuthEmailPostExecute(r ApiRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRequestPasswordResetV1AuthPasswordResetPostRequest struct {
+type ApiRequestPasswordResetRequest struct {
 	ctx              context.Context
 	ApiService       *V1AuthAPIService
 	emailOnlyRequest *EmailOnlyRequest
 }
 
-func (r ApiRequestPasswordResetV1AuthPasswordResetPostRequest) EmailOnlyRequest(emailOnlyRequest EmailOnlyRequest) ApiRequestPasswordResetV1AuthPasswordResetPostRequest {
+func (r ApiRequestPasswordResetRequest) EmailOnlyRequest(emailOnlyRequest EmailOnlyRequest) ApiRequestPasswordResetRequest {
 	r.emailOnlyRequest = &emailOnlyRequest
 	return r
 }
 
-func (r ApiRequestPasswordResetV1AuthPasswordResetPostRequest) Execute() (*AcceptedResponse, *http.Response, error) {
-	return r.ApiService.RequestPasswordResetV1AuthPasswordResetPostExecute(r)
+func (r ApiRequestPasswordResetRequest) Execute() (*AcceptedResponse, *http.Response, error) {
+	return r.ApiService.RequestPasswordResetExecute(r)
 }
 
 /*
-RequestPasswordResetV1AuthPasswordResetPost Request a password reset link
+RequestPasswordReset Request a password reset link
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRequestPasswordResetV1AuthPasswordResetPostRequest
+	@return ApiRequestPasswordResetRequest
 */
-func (a *V1AuthAPIService) RequestPasswordResetV1AuthPasswordResetPost(ctx context.Context) ApiRequestPasswordResetV1AuthPasswordResetPostRequest {
-	return ApiRequestPasswordResetV1AuthPasswordResetPostRequest{
+func (a *V1AuthAPIService) RequestPasswordReset(ctx context.Context) ApiRequestPasswordResetRequest {
+	return ApiRequestPasswordResetRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -2222,7 +2222,7 @@ func (a *V1AuthAPIService) RequestPasswordResetV1AuthPasswordResetPost(ctx conte
 // Execute executes the request
 //
 //	@return AcceptedResponse
-func (a *V1AuthAPIService) RequestPasswordResetV1AuthPasswordResetPostExecute(r ApiRequestPasswordResetV1AuthPasswordResetPostRequest) (*AcceptedResponse, *http.Response, error) {
+func (a *V1AuthAPIService) RequestPasswordResetExecute(r ApiRequestPasswordResetRequest) (*AcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -2230,7 +2230,7 @@ func (a *V1AuthAPIService) RequestPasswordResetV1AuthPasswordResetPostExecute(r 
 		localVarReturnValue *AcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RequestPasswordResetV1AuthPasswordResetPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RequestPasswordReset")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2376,29 +2376,29 @@ func (a *V1AuthAPIService) RequestPasswordResetV1AuthPasswordResetPostExecute(r 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiResendVerificationV1AuthResendVerificationPostRequest struct {
+type ApiResendVerificationRequest struct {
 	ctx              context.Context
 	ApiService       *V1AuthAPIService
 	emailOnlyRequest *EmailOnlyRequest
 }
 
-func (r ApiResendVerificationV1AuthResendVerificationPostRequest) EmailOnlyRequest(emailOnlyRequest EmailOnlyRequest) ApiResendVerificationV1AuthResendVerificationPostRequest {
+func (r ApiResendVerificationRequest) EmailOnlyRequest(emailOnlyRequest EmailOnlyRequest) ApiResendVerificationRequest {
 	r.emailOnlyRequest = &emailOnlyRequest
 	return r
 }
 
-func (r ApiResendVerificationV1AuthResendVerificationPostRequest) Execute() (*AcceptedResponse, *http.Response, error) {
-	return r.ApiService.ResendVerificationV1AuthResendVerificationPostExecute(r)
+func (r ApiResendVerificationRequest) Execute() (*AcceptedResponse, *http.Response, error) {
+	return r.ApiService.ResendVerificationExecute(r)
 }
 
 /*
-ResendVerificationV1AuthResendVerificationPost Send the confirmation email again
+ResendVerification Send the confirmation email again
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiResendVerificationV1AuthResendVerificationPostRequest
+	@return ApiResendVerificationRequest
 */
-func (a *V1AuthAPIService) ResendVerificationV1AuthResendVerificationPost(ctx context.Context) ApiResendVerificationV1AuthResendVerificationPostRequest {
-	return ApiResendVerificationV1AuthResendVerificationPostRequest{
+func (a *V1AuthAPIService) ResendVerification(ctx context.Context) ApiResendVerificationRequest {
+	return ApiResendVerificationRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -2407,7 +2407,7 @@ func (a *V1AuthAPIService) ResendVerificationV1AuthResendVerificationPost(ctx co
 // Execute executes the request
 //
 //	@return AcceptedResponse
-func (a *V1AuthAPIService) ResendVerificationV1AuthResendVerificationPostExecute(r ApiResendVerificationV1AuthResendVerificationPostRequest) (*AcceptedResponse, *http.Response, error) {
+func (a *V1AuthAPIService) ResendVerificationExecute(r ApiResendVerificationRequest) (*AcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -2415,7 +2415,7 @@ func (a *V1AuthAPIService) ResendVerificationV1AuthResendVerificationPostExecute
 		localVarReturnValue *AcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ResendVerificationV1AuthResendVerificationPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.ResendVerification")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2561,39 +2561,39 @@ func (a *V1AuthAPIService) ResendVerificationV1AuthResendVerificationPostExecute
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRevokeOtherSessionsV1AuthSessionsDeleteRequest struct {
+type ApiRevokeOtherSessionsRequest struct {
 	ctx        context.Context
 	ApiService *V1AuthAPIService
 }
 
-func (r ApiRevokeOtherSessionsV1AuthSessionsDeleteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.RevokeOtherSessionsV1AuthSessionsDeleteExecute(r)
+func (r ApiRevokeOtherSessionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RevokeOtherSessionsExecute(r)
 }
 
 /*
-RevokeOtherSessionsV1AuthSessionsDelete Revoke every other session
+RevokeOtherSessions Revoke every other session
 
 Signs out everywhere except the session making the request.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiRevokeOtherSessionsV1AuthSessionsDeleteRequest
+	@return ApiRevokeOtherSessionsRequest
 */
-func (a *V1AuthAPIService) RevokeOtherSessionsV1AuthSessionsDelete(ctx context.Context) ApiRevokeOtherSessionsV1AuthSessionsDeleteRequest {
-	return ApiRevokeOtherSessionsV1AuthSessionsDeleteRequest{
+func (a *V1AuthAPIService) RevokeOtherSessions(ctx context.Context) ApiRevokeOtherSessionsRequest {
+	return ApiRevokeOtherSessionsRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-func (a *V1AuthAPIService) RevokeOtherSessionsV1AuthSessionsDeleteExecute(r ApiRevokeOtherSessionsV1AuthSessionsDeleteRequest) (*http.Response, error) {
+func (a *V1AuthAPIService) RevokeOtherSessionsExecute(r ApiRevokeOtherSessionsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RevokeOtherSessionsV1AuthSessionsDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RevokeOtherSessions")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2725,25 +2725,25 @@ func (a *V1AuthAPIService) RevokeOtherSessionsV1AuthSessionsDeleteExecute(r ApiR
 	return localVarHTTPResponse, nil
 }
 
-type ApiRevokeSessionV1AuthSessionsSessionIdDeleteRequest struct {
+type ApiRevokeSessionRequest struct {
 	ctx        context.Context
 	ApiService *V1AuthAPIService
 	sessionId  string
 }
 
-func (r ApiRevokeSessionV1AuthSessionsSessionIdDeleteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.RevokeSessionV1AuthSessionsSessionIdDeleteExecute(r)
+func (r ApiRevokeSessionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RevokeSessionExecute(r)
 }
 
 /*
-RevokeSessionV1AuthSessionsSessionIdDelete Revoke one session
+RevokeSession Revoke one session
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param sessionId
-	@return ApiRevokeSessionV1AuthSessionsSessionIdDeleteRequest
+	@return ApiRevokeSessionRequest
 */
-func (a *V1AuthAPIService) RevokeSessionV1AuthSessionsSessionIdDelete(ctx context.Context, sessionId string) ApiRevokeSessionV1AuthSessionsSessionIdDeleteRequest {
-	return ApiRevokeSessionV1AuthSessionsSessionIdDeleteRequest{
+func (a *V1AuthAPIService) RevokeSession(ctx context.Context, sessionId string) ApiRevokeSessionRequest {
+	return ApiRevokeSessionRequest{
 		ApiService: a,
 		ctx:        ctx,
 		sessionId:  sessionId,
@@ -2751,14 +2751,14 @@ func (a *V1AuthAPIService) RevokeSessionV1AuthSessionsSessionIdDelete(ctx contex
 }
 
 // Execute executes the request
-func (a *V1AuthAPIService) RevokeSessionV1AuthSessionsSessionIdDeleteExecute(r ApiRevokeSessionV1AuthSessionsSessionIdDeleteRequest) (*http.Response, error) {
+func (a *V1AuthAPIService) RevokeSessionExecute(r ApiRevokeSessionRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RevokeSessionV1AuthSessionsSessionIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.RevokeSession")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2902,29 +2902,29 @@ func (a *V1AuthAPIService) RevokeSessionV1AuthSessionsSessionIdDeleteExecute(r A
 	return localVarHTTPResponse, nil
 }
 
-type ApiVerifyEmailV1AuthVerifyEmailPostRequest struct {
+type ApiVerifyEmailRequest struct {
 	ctx              context.Context
 	ApiService       *V1AuthAPIService
 	tokenOnlyRequest *TokenOnlyRequest
 }
 
-func (r ApiVerifyEmailV1AuthVerifyEmailPostRequest) TokenOnlyRequest(tokenOnlyRequest TokenOnlyRequest) ApiVerifyEmailV1AuthVerifyEmailPostRequest {
+func (r ApiVerifyEmailRequest) TokenOnlyRequest(tokenOnlyRequest TokenOnlyRequest) ApiVerifyEmailRequest {
 	r.tokenOnlyRequest = &tokenOnlyRequest
 	return r
 }
 
-func (r ApiVerifyEmailV1AuthVerifyEmailPostRequest) Execute() (*UserResponse, *http.Response, error) {
-	return r.ApiService.VerifyEmailV1AuthVerifyEmailPostExecute(r)
+func (r ApiVerifyEmailRequest) Execute() (*UserResponse, *http.Response, error) {
+	return r.ApiService.VerifyEmailExecute(r)
 }
 
 /*
-VerifyEmailV1AuthVerifyEmailPost Confirm an email address
+VerifyEmail Confirm an email address
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiVerifyEmailV1AuthVerifyEmailPostRequest
+	@return ApiVerifyEmailRequest
 */
-func (a *V1AuthAPIService) VerifyEmailV1AuthVerifyEmailPost(ctx context.Context) ApiVerifyEmailV1AuthVerifyEmailPostRequest {
-	return ApiVerifyEmailV1AuthVerifyEmailPostRequest{
+func (a *V1AuthAPIService) VerifyEmail(ctx context.Context) ApiVerifyEmailRequest {
+	return ApiVerifyEmailRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -2933,7 +2933,7 @@ func (a *V1AuthAPIService) VerifyEmailV1AuthVerifyEmailPost(ctx context.Context)
 // Execute executes the request
 //
 //	@return UserResponse
-func (a *V1AuthAPIService) VerifyEmailV1AuthVerifyEmailPostExecute(r ApiVerifyEmailV1AuthVerifyEmailPostRequest) (*UserResponse, *http.Response, error) {
+func (a *V1AuthAPIService) VerifyEmailExecute(r ApiVerifyEmailRequest) (*UserResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -2941,7 +2941,7 @@ func (a *V1AuthAPIService) VerifyEmailV1AuthVerifyEmailPostExecute(r ApiVerifyEm
 		localVarReturnValue *UserResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.VerifyEmailV1AuthVerifyEmailPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthAPIService.VerifyEmail")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

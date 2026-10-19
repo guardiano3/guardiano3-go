@@ -23,31 +23,31 @@ import (
 // V1PoliciesAPIService V1PoliciesAPI service
 type V1PoliciesAPIService service
 
-type ApiAcceptPoliciesV1PoliciesAcceptPostRequest struct {
+type ApiAcceptPoliciesRequest struct {
 	ctx                 context.Context
 	ApiService          *V1PoliciesAPIService
 	policyAcceptRequest *PolicyAcceptRequest
 }
 
-func (r ApiAcceptPoliciesV1PoliciesAcceptPostRequest) PolicyAcceptRequest(policyAcceptRequest PolicyAcceptRequest) ApiAcceptPoliciesV1PoliciesAcceptPostRequest {
+func (r ApiAcceptPoliciesRequest) PolicyAcceptRequest(policyAcceptRequest PolicyAcceptRequest) ApiAcceptPoliciesRequest {
 	r.policyAcceptRequest = &policyAcceptRequest
 	return r
 }
 
-func (r ApiAcceptPoliciesV1PoliciesAcceptPostRequest) Execute() (*PoliciesAcceptedResponse, *http.Response, error) {
-	return r.ApiService.AcceptPoliciesV1PoliciesAcceptPostExecute(r)
+func (r ApiAcceptPoliciesRequest) Execute() (*PoliciesAcceptedResponse, *http.Response, error) {
+	return r.ApiService.AcceptPoliciesExecute(r)
 }
 
 /*
-AcceptPoliciesV1PoliciesAcceptPost Accept the current policies
+AcceptPolicies Accept the current policies
 
 Records that the authenticated user has accepted the specified policy versions. Pass the `version` strings returned by `GET /v1/policies/current`. The server rejects a version that does not match the current one — this prevents a client from silently recording acceptance of a version it never showed the user.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAcceptPoliciesV1PoliciesAcceptPostRequest
+	@return ApiAcceptPoliciesRequest
 */
-func (a *V1PoliciesAPIService) AcceptPoliciesV1PoliciesAcceptPost(ctx context.Context) ApiAcceptPoliciesV1PoliciesAcceptPostRequest {
-	return ApiAcceptPoliciesV1PoliciesAcceptPostRequest{
+func (a *V1PoliciesAPIService) AcceptPolicies(ctx context.Context) ApiAcceptPoliciesRequest {
+	return ApiAcceptPoliciesRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -56,7 +56,7 @@ func (a *V1PoliciesAPIService) AcceptPoliciesV1PoliciesAcceptPost(ctx context.Co
 // Execute executes the request
 //
 //	@return PoliciesAcceptedResponse
-func (a *V1PoliciesAPIService) AcceptPoliciesV1PoliciesAcceptPostExecute(r ApiAcceptPoliciesV1PoliciesAcceptPostRequest) (*PoliciesAcceptedResponse, *http.Response, error) {
+func (a *V1PoliciesAPIService) AcceptPoliciesExecute(r ApiAcceptPoliciesRequest) (*PoliciesAcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *V1PoliciesAPIService) AcceptPoliciesV1PoliciesAcceptPostExecute(r ApiAc
 		localVarReturnValue *PoliciesAcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1PoliciesAPIService.AcceptPoliciesV1PoliciesAcceptPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1PoliciesAPIService.AcceptPolicies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -210,27 +210,27 @@ func (a *V1PoliciesAPIService) AcceptPoliciesV1PoliciesAcceptPostExecute(r ApiAc
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetCurrentPoliciesV1PoliciesCurrentGetRequest struct {
+type ApiGetCurrentPoliciesRequest struct {
 	ctx        context.Context
 	ApiService *V1PoliciesAPIService
 }
 
-func (r ApiGetCurrentPoliciesV1PoliciesCurrentGetRequest) Execute() (*PoliciesCurrentResponse, *http.Response, error) {
-	return r.ApiService.GetCurrentPoliciesV1PoliciesCurrentGetExecute(r)
+func (r ApiGetCurrentPoliciesRequest) Execute() (*PoliciesCurrentResponse, *http.Response, error) {
+	return r.ApiService.GetCurrentPoliciesExecute(r)
 }
 
 /*
-GetCurrentPoliciesV1PoliciesCurrentGet Current policy versions
+GetCurrentPolicies Current policy versions
 
 Returns the version string and canonical URL for the current Terms of Service and Privacy Policy. No authentication required — this endpoint is called before a user signs in to decide whether to show the acceptance screen.
 
 Compare the returned versions against `policiesAccepted` on `GET /v1/auth/me` to determine whether the signed-in user needs to accept an updated policy.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetCurrentPoliciesV1PoliciesCurrentGetRequest
+	@return ApiGetCurrentPoliciesRequest
 */
-func (a *V1PoliciesAPIService) GetCurrentPoliciesV1PoliciesCurrentGet(ctx context.Context) ApiGetCurrentPoliciesV1PoliciesCurrentGetRequest {
-	return ApiGetCurrentPoliciesV1PoliciesCurrentGetRequest{
+func (a *V1PoliciesAPIService) GetCurrentPolicies(ctx context.Context) ApiGetCurrentPoliciesRequest {
+	return ApiGetCurrentPoliciesRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -239,7 +239,7 @@ func (a *V1PoliciesAPIService) GetCurrentPoliciesV1PoliciesCurrentGet(ctx contex
 // Execute executes the request
 //
 //	@return PoliciesCurrentResponse
-func (a *V1PoliciesAPIService) GetCurrentPoliciesV1PoliciesCurrentGetExecute(r ApiGetCurrentPoliciesV1PoliciesCurrentGetRequest) (*PoliciesCurrentResponse, *http.Response, error) {
+func (a *V1PoliciesAPIService) GetCurrentPoliciesExecute(r ApiGetCurrentPoliciesRequest) (*PoliciesCurrentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -247,7 +247,7 @@ func (a *V1PoliciesAPIService) GetCurrentPoliciesV1PoliciesCurrentGetExecute(r A
 		localVarReturnValue *PoliciesCurrentResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1PoliciesAPIService.GetCurrentPoliciesV1PoliciesCurrentGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1PoliciesAPIService.GetCurrentPolicies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -388,27 +388,27 @@ func (a *V1PoliciesAPIService) GetCurrentPoliciesV1PoliciesCurrentGetExecute(r A
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetPolicyContentV1PoliciesKindGetRequest struct {
+type ApiGetPolicyContentRequest struct {
 	ctx        context.Context
 	ApiService *V1PoliciesAPIService
 	kind       PolicyKind
 }
 
-func (r ApiGetPolicyContentV1PoliciesKindGetRequest) Execute() (string, *http.Response, error) {
-	return r.ApiService.GetPolicyContentV1PoliciesKindGetExecute(r)
+func (r ApiGetPolicyContentRequest) Execute() (string, *http.Response, error) {
+	return r.ApiService.GetPolicyContentExecute(r)
 }
 
 /*
-GetPolicyContentV1PoliciesKindGet Policy document content
+GetPolicyContent Policy document content
 
 Returns the current version of the requested policy document as Markdown. No authentication required.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param kind
-	@return ApiGetPolicyContentV1PoliciesKindGetRequest
+	@return ApiGetPolicyContentRequest
 */
-func (a *V1PoliciesAPIService) GetPolicyContentV1PoliciesKindGet(ctx context.Context, kind PolicyKind) ApiGetPolicyContentV1PoliciesKindGetRequest {
-	return ApiGetPolicyContentV1PoliciesKindGetRequest{
+func (a *V1PoliciesAPIService) GetPolicyContent(ctx context.Context, kind PolicyKind) ApiGetPolicyContentRequest {
+	return ApiGetPolicyContentRequest{
 		ApiService: a,
 		ctx:        ctx,
 		kind:       kind,
@@ -418,7 +418,7 @@ func (a *V1PoliciesAPIService) GetPolicyContentV1PoliciesKindGet(ctx context.Con
 // Execute executes the request
 //
 //	@return string
-func (a *V1PoliciesAPIService) GetPolicyContentV1PoliciesKindGetExecute(r ApiGetPolicyContentV1PoliciesKindGetRequest) (string, *http.Response, error) {
+func (a *V1PoliciesAPIService) GetPolicyContentExecute(r ApiGetPolicyContentRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -426,7 +426,7 @@ func (a *V1PoliciesAPIService) GetPolicyContentV1PoliciesKindGetExecute(r ApiGet
 		localVarReturnValue string
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1PoliciesAPIService.GetPolicyContentV1PoliciesKindGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1PoliciesAPIService.GetPolicyContent")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

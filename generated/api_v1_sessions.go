@@ -23,37 +23,37 @@ import (
 // V1SessionsAPIService V1SessionsAPI service
 type V1SessionsAPIService service
 
-type ApiCreateSessionV1SessionsPostRequest struct {
+type ApiCreateSessionRequest struct {
 	ctx                  context.Context
 	ApiService           *V1SessionsAPIService
 	sessionCreateRequest *SessionCreateRequest
 	idempotencyKey       *string
 }
 
-func (r ApiCreateSessionV1SessionsPostRequest) SessionCreateRequest(sessionCreateRequest SessionCreateRequest) ApiCreateSessionV1SessionsPostRequest {
+func (r ApiCreateSessionRequest) SessionCreateRequest(sessionCreateRequest SessionCreateRequest) ApiCreateSessionRequest {
 	r.sessionCreateRequest = &sessionCreateRequest
 	return r
 }
 
-func (r ApiCreateSessionV1SessionsPostRequest) IdempotencyKey(idempotencyKey string) ApiCreateSessionV1SessionsPostRequest {
+func (r ApiCreateSessionRequest) IdempotencyKey(idempotencyKey string) ApiCreateSessionRequest {
 	r.idempotencyKey = &idempotencyKey
 	return r
 }
 
-func (r ApiCreateSessionV1SessionsPostRequest) Execute() (*SessionCreatedResponse, *http.Response, error) {
-	return r.ApiService.CreateSessionV1SessionsPostExecute(r)
+func (r ApiCreateSessionRequest) Execute() (*SessionCreatedResponse, *http.Response, error) {
+	return r.ApiService.CreateSessionExecute(r)
 }
 
 /*
-CreateSessionV1SessionsPost Start a session
+CreateSession Start a session
 
 Accepts `Idempotency-Key`; a replay returns the original session.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiCreateSessionV1SessionsPostRequest
+	@return ApiCreateSessionRequest
 */
-func (a *V1SessionsAPIService) CreateSessionV1SessionsPost(ctx context.Context) ApiCreateSessionV1SessionsPostRequest {
-	return ApiCreateSessionV1SessionsPostRequest{
+func (a *V1SessionsAPIService) CreateSession(ctx context.Context) ApiCreateSessionRequest {
+	return ApiCreateSessionRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -62,7 +62,7 @@ func (a *V1SessionsAPIService) CreateSessionV1SessionsPost(ctx context.Context) 
 // Execute executes the request
 //
 //	@return SessionCreatedResponse
-func (a *V1SessionsAPIService) CreateSessionV1SessionsPostExecute(r ApiCreateSessionV1SessionsPostRequest) (*SessionCreatedResponse, *http.Response, error) {
+func (a *V1SessionsAPIService) CreateSessionExecute(r ApiCreateSessionRequest) (*SessionCreatedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -70,7 +70,7 @@ func (a *V1SessionsAPIService) CreateSessionV1SessionsPostExecute(r ApiCreateSes
 		localVarReturnValue *SessionCreatedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.CreateSessionV1SessionsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.CreateSession")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -219,25 +219,25 @@ func (a *V1SessionsAPIService) CreateSessionV1SessionsPostExecute(r ApiCreateSes
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetSessionV1SessionsSessionIdGetRequest struct {
+type ApiGetSessionRequest struct {
 	ctx        context.Context
 	ApiService *V1SessionsAPIService
 	sessionId  string
 }
 
-func (r ApiGetSessionV1SessionsSessionIdGetRequest) Execute() (*SessionResponse, *http.Response, error) {
-	return r.ApiService.GetSessionV1SessionsSessionIdGetExecute(r)
+func (r ApiGetSessionRequest) Execute() (*SessionResponse, *http.Response, error) {
+	return r.ApiService.GetSessionExecute(r)
 }
 
 /*
-GetSessionV1SessionsSessionIdGet Get one session
+GetSession Get one session
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param sessionId
-	@return ApiGetSessionV1SessionsSessionIdGetRequest
+	@return ApiGetSessionRequest
 */
-func (a *V1SessionsAPIService) GetSessionV1SessionsSessionIdGet(ctx context.Context, sessionId string) ApiGetSessionV1SessionsSessionIdGetRequest {
-	return ApiGetSessionV1SessionsSessionIdGetRequest{
+func (a *V1SessionsAPIService) GetSession(ctx context.Context, sessionId string) ApiGetSessionRequest {
+	return ApiGetSessionRequest{
 		ApiService: a,
 		ctx:        ctx,
 		sessionId:  sessionId,
@@ -247,7 +247,7 @@ func (a *V1SessionsAPIService) GetSessionV1SessionsSessionIdGet(ctx context.Cont
 // Execute executes the request
 //
 //	@return SessionResponse
-func (a *V1SessionsAPIService) GetSessionV1SessionsSessionIdGetExecute(r ApiGetSessionV1SessionsSessionIdGetRequest) (*SessionResponse, *http.Response, error) {
+func (a *V1SessionsAPIService) GetSessionExecute(r ApiGetSessionRequest) (*SessionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -255,7 +255,7 @@ func (a *V1SessionsAPIService) GetSessionV1SessionsSessionIdGetExecute(r ApiGetS
 		localVarReturnValue *SessionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.GetSessionV1SessionsSessionIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.GetSession")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -408,37 +408,37 @@ func (a *V1SessionsAPIService) GetSessionV1SessionsSessionIdGetExecute(r ApiGetS
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListHistoryV1HistoryGetRequest struct {
+type ApiListHistoryRequest struct {
 	ctx        context.Context
 	ApiService *V1SessionsAPIService
 	cursor     *string
 	limit      *int32
 }
 
-func (r ApiListHistoryV1HistoryGetRequest) Cursor(cursor string) ApiListHistoryV1HistoryGetRequest {
+func (r ApiListHistoryRequest) Cursor(cursor string) ApiListHistoryRequest {
 	r.cursor = &cursor
 	return r
 }
 
-func (r ApiListHistoryV1HistoryGetRequest) Limit(limit int32) ApiListHistoryV1HistoryGetRequest {
+func (r ApiListHistoryRequest) Limit(limit int32) ApiListHistoryRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiListHistoryV1HistoryGetRequest) Execute() (*HistoryPage, *http.Response, error) {
-	return r.ApiService.ListHistoryV1HistoryGetExecute(r)
+func (r ApiListHistoryRequest) Execute() (*HistoryPage, *http.Response, error) {
+	return r.ApiService.ListHistoryExecute(r)
 }
 
 /*
-ListHistoryV1HistoryGet List past sessions
+ListHistory List past sessions
 
 Cursor-paginated, newest first. Pass `cursor` from the previous response's `nextCursor`. The cursor is opaque -- do not parse or construct one.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListHistoryV1HistoryGetRequest
+	@return ApiListHistoryRequest
 */
-func (a *V1SessionsAPIService) ListHistoryV1HistoryGet(ctx context.Context) ApiListHistoryV1HistoryGetRequest {
-	return ApiListHistoryV1HistoryGetRequest{
+func (a *V1SessionsAPIService) ListHistory(ctx context.Context) ApiListHistoryRequest {
+	return ApiListHistoryRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -447,7 +447,7 @@ func (a *V1SessionsAPIService) ListHistoryV1HistoryGet(ctx context.Context) ApiL
 // Execute executes the request
 //
 //	@return HistoryPage
-func (a *V1SessionsAPIService) ListHistoryV1HistoryGetExecute(r ApiListHistoryV1HistoryGetRequest) (*HistoryPage, *http.Response, error) {
+func (a *V1SessionsAPIService) ListHistoryExecute(r ApiListHistoryRequest) (*HistoryPage, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -455,7 +455,7 @@ func (a *V1SessionsAPIService) ListHistoryV1HistoryGetExecute(r ApiListHistoryV1
 		localVarReturnValue *HistoryPage
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.ListHistoryV1HistoryGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.ListHistory")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -602,25 +602,25 @@ func (a *V1SessionsAPIService) ListHistoryV1HistoryGetExecute(r ApiListHistoryV1
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiStopSessionV1SessionsSessionIdStopPostRequest struct {
+type ApiStopSessionRequest struct {
 	ctx        context.Context
 	ApiService *V1SessionsAPIService
 	sessionId  string
 }
 
-func (r ApiStopSessionV1SessionsSessionIdStopPostRequest) Execute() (*SessionResponse, *http.Response, error) {
-	return r.ApiService.StopSessionV1SessionsSessionIdStopPostExecute(r)
+func (r ApiStopSessionRequest) Execute() (*SessionResponse, *http.Response, error) {
+	return r.ApiService.StopSessionExecute(r)
 }
 
 /*
-StopSessionV1SessionsSessionIdStopPost Finalise a session
+StopSession Finalise a session
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param sessionId
-	@return ApiStopSessionV1SessionsSessionIdStopPostRequest
+	@return ApiStopSessionRequest
 */
-func (a *V1SessionsAPIService) StopSessionV1SessionsSessionIdStopPost(ctx context.Context, sessionId string) ApiStopSessionV1SessionsSessionIdStopPostRequest {
-	return ApiStopSessionV1SessionsSessionIdStopPostRequest{
+func (a *V1SessionsAPIService) StopSession(ctx context.Context, sessionId string) ApiStopSessionRequest {
+	return ApiStopSessionRequest{
 		ApiService: a,
 		ctx:        ctx,
 		sessionId:  sessionId,
@@ -630,7 +630,7 @@ func (a *V1SessionsAPIService) StopSessionV1SessionsSessionIdStopPost(ctx contex
 // Execute executes the request
 //
 //	@return SessionResponse
-func (a *V1SessionsAPIService) StopSessionV1SessionsSessionIdStopPostExecute(r ApiStopSessionV1SessionsSessionIdStopPostRequest) (*SessionResponse, *http.Response, error) {
+func (a *V1SessionsAPIService) StopSessionExecute(r ApiStopSessionRequest) (*SessionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -638,7 +638,7 @@ func (a *V1SessionsAPIService) StopSessionV1SessionsSessionIdStopPostExecute(r A
 		localVarReturnValue *SessionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.StopSessionV1SessionsSessionIdStopPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.StopSession")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -791,7 +791,7 @@ func (a *V1SessionsAPIService) StopSessionV1SessionsSessionIdStopPostExecute(r A
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest struct {
+type ApiSubmitFeedbackRequest struct {
 	ctx             context.Context
 	ApiService      *V1SessionsAPIService
 	sessionId       string
@@ -799,31 +799,31 @@ type ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest struct {
 	idempotencyKey  *string
 }
 
-func (r ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest) FeedbackRequest(feedbackRequest FeedbackRequest) ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest {
+func (r ApiSubmitFeedbackRequest) FeedbackRequest(feedbackRequest FeedbackRequest) ApiSubmitFeedbackRequest {
 	r.feedbackRequest = &feedbackRequest
 	return r
 }
 
-func (r ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest) IdempotencyKey(idempotencyKey string) ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest {
+func (r ApiSubmitFeedbackRequest) IdempotencyKey(idempotencyKey string) ApiSubmitFeedbackRequest {
 	r.idempotencyKey = &idempotencyKey
 	return r
 }
 
-func (r ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest) Execute() (*http.Response, error) {
-	return r.ApiService.SubmitFeedbackV1SessionsSessionIdFeedbackPostExecute(r)
+func (r ApiSubmitFeedbackRequest) Execute() (*http.Response, error) {
+	return r.ApiService.SubmitFeedbackExecute(r)
 }
 
 /*
-SubmitFeedbackV1SessionsSessionIdFeedbackPost Label a session as scam or not
+SubmitFeedback Label a session as scam or not
 
 Your label for the session: scam or not.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param sessionId
-	@return ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest
+	@return ApiSubmitFeedbackRequest
 */
-func (a *V1SessionsAPIService) SubmitFeedbackV1SessionsSessionIdFeedbackPost(ctx context.Context, sessionId string) ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest {
-	return ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest{
+func (a *V1SessionsAPIService) SubmitFeedback(ctx context.Context, sessionId string) ApiSubmitFeedbackRequest {
+	return ApiSubmitFeedbackRequest{
 		ApiService: a,
 		ctx:        ctx,
 		sessionId:  sessionId,
@@ -831,14 +831,14 @@ func (a *V1SessionsAPIService) SubmitFeedbackV1SessionsSessionIdFeedbackPost(ctx
 }
 
 // Execute executes the request
-func (a *V1SessionsAPIService) SubmitFeedbackV1SessionsSessionIdFeedbackPostExecute(r ApiSubmitFeedbackV1SessionsSessionIdFeedbackPostRequest) (*http.Response, error) {
+func (a *V1SessionsAPIService) SubmitFeedbackExecute(r ApiSubmitFeedbackRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.SubmitFeedbackV1SessionsSessionIdFeedbackPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SessionsAPIService.SubmitFeedback")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}

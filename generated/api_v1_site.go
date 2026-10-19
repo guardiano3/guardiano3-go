@@ -22,31 +22,31 @@ import (
 // V1SiteAPIService V1SiteAPI service
 type V1SiteAPIService service
 
-type ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest struct {
+type ApiConfirmSubscriptionRequest struct {
 	ctx                      context.Context
 	ApiService               *V1SiteAPIService
 	subscriptionTokenRequest *SubscriptionTokenRequest
 }
 
-func (r ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest) SubscriptionTokenRequest(subscriptionTokenRequest SubscriptionTokenRequest) ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest {
+func (r ApiConfirmSubscriptionRequest) SubscriptionTokenRequest(subscriptionTokenRequest SubscriptionTokenRequest) ApiConfirmSubscriptionRequest {
 	r.subscriptionTokenRequest = &subscriptionTokenRequest
 	return r
 }
 
-func (r ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest) Execute() (*SubscriptionStatusResponse, *http.Response, error) {
-	return r.ApiService.ConfirmSubscriptionV1SiteSubscribeConfirmPostExecute(r)
+func (r ApiConfirmSubscriptionRequest) Execute() (*SubscriptionStatusResponse, *http.Response, error) {
+	return r.ApiService.ConfirmSubscriptionExecute(r)
 }
 
 /*
-ConfirmSubscriptionV1SiteSubscribeConfirmPost Confirm a subscription
+ConfirmSubscription Confirm a subscription
 
 Uses the token from the confirmation email. Single use.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest
+	@return ApiConfirmSubscriptionRequest
 */
-func (a *V1SiteAPIService) ConfirmSubscriptionV1SiteSubscribeConfirmPost(ctx context.Context) ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest {
-	return ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest{
+func (a *V1SiteAPIService) ConfirmSubscription(ctx context.Context) ApiConfirmSubscriptionRequest {
+	return ApiConfirmSubscriptionRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -55,7 +55,7 @@ func (a *V1SiteAPIService) ConfirmSubscriptionV1SiteSubscribeConfirmPost(ctx con
 // Execute executes the request
 //
 //	@return SubscriptionStatusResponse
-func (a *V1SiteAPIService) ConfirmSubscriptionV1SiteSubscribeConfirmPostExecute(r ApiConfirmSubscriptionV1SiteSubscribeConfirmPostRequest) (*SubscriptionStatusResponse, *http.Response, error) {
+func (a *V1SiteAPIService) ConfirmSubscriptionExecute(r ApiConfirmSubscriptionRequest) (*SubscriptionStatusResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -63,7 +63,7 @@ func (a *V1SiteAPIService) ConfirmSubscriptionV1SiteSubscribeConfirmPostExecute(
 		localVarReturnValue *SubscriptionStatusResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.ConfirmSubscriptionV1SiteSubscribeConfirmPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.ConfirmSubscription")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -209,31 +209,31 @@ func (a *V1SiteAPIService) ConfirmSubscriptionV1SiteSubscribeConfirmPostExecute(
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiContactSalesV1SiteContactSalesPostRequest struct {
+type ApiContactSalesRequest struct {
 	ctx                 context.Context
 	ApiService          *V1SiteAPIService
 	contactSalesRequest *ContactSalesRequest
 }
 
-func (r ApiContactSalesV1SiteContactSalesPostRequest) ContactSalesRequest(contactSalesRequest ContactSalesRequest) ApiContactSalesV1SiteContactSalesPostRequest {
+func (r ApiContactSalesRequest) ContactSalesRequest(contactSalesRequest ContactSalesRequest) ApiContactSalesRequest {
 	r.contactSalesRequest = &contactSalesRequest
 	return r
 }
 
-func (r ApiContactSalesV1SiteContactSalesPostRequest) Execute() (*SiteAcceptedResponse, *http.Response, error) {
-	return r.ApiService.ContactSalesV1SiteContactSalesPostExecute(r)
+func (r ApiContactSalesRequest) Execute() (*SiteAcceptedResponse, *http.Response, error) {
+	return r.ApiService.ContactSalesExecute(r)
 }
 
 /*
-ContactSalesV1SiteContactSalesPost Send a sales inquiry
+ContactSales Send a sales inquiry
 
 Stores the inquiry and forwards it to the sales inbox, with Reply-To set to the visitor. Nothing is emailed to the visitor.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiContactSalesV1SiteContactSalesPostRequest
+	@return ApiContactSalesRequest
 */
-func (a *V1SiteAPIService) ContactSalesV1SiteContactSalesPost(ctx context.Context) ApiContactSalesV1SiteContactSalesPostRequest {
-	return ApiContactSalesV1SiteContactSalesPostRequest{
+func (a *V1SiteAPIService) ContactSales(ctx context.Context) ApiContactSalesRequest {
+	return ApiContactSalesRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -242,7 +242,7 @@ func (a *V1SiteAPIService) ContactSalesV1SiteContactSalesPost(ctx context.Contex
 // Execute executes the request
 //
 //	@return SiteAcceptedResponse
-func (a *V1SiteAPIService) ContactSalesV1SiteContactSalesPostExecute(r ApiContactSalesV1SiteContactSalesPostRequest) (*SiteAcceptedResponse, *http.Response, error) {
+func (a *V1SiteAPIService) ContactSalesExecute(r ApiContactSalesRequest) (*SiteAcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -250,7 +250,7 @@ func (a *V1SiteAPIService) ContactSalesV1SiteContactSalesPostExecute(r ApiContac
 		localVarReturnValue *SiteAcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.ContactSalesV1SiteContactSalesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.ContactSales")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -396,31 +396,31 @@ func (a *V1SiteAPIService) ContactSalesV1SiteContactSalesPostExecute(r ApiContac
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSubscribeV1SiteSubscribePostRequest struct {
+type ApiSubscribeRequest struct {
 	ctx              context.Context
 	ApiService       *V1SiteAPIService
 	subscribeRequest *SubscribeRequest
 }
 
-func (r ApiSubscribeV1SiteSubscribePostRequest) SubscribeRequest(subscribeRequest SubscribeRequest) ApiSubscribeV1SiteSubscribePostRequest {
+func (r ApiSubscribeRequest) SubscribeRequest(subscribeRequest SubscribeRequest) ApiSubscribeRequest {
 	r.subscribeRequest = &subscribeRequest
 	return r
 }
 
-func (r ApiSubscribeV1SiteSubscribePostRequest) Execute() (*SiteAcceptedResponse, *http.Response, error) {
-	return r.ApiService.SubscribeV1SiteSubscribePostExecute(r)
+func (r ApiSubscribeRequest) Execute() (*SiteAcceptedResponse, *http.Response, error) {
+	return r.ApiService.SubscribeExecute(r)
 }
 
 /*
-SubscribeV1SiteSubscribePost Subscribe to product updates
+Subscribe Subscribe to product updates
 
 Starts double opt-in: sends a confirmation link and adds nothing to the mailing list until it is used. Always returns 202 with the same body, so the response never shows whether an address is already subscribed.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiSubscribeV1SiteSubscribePostRequest
+	@return ApiSubscribeRequest
 */
-func (a *V1SiteAPIService) SubscribeV1SiteSubscribePost(ctx context.Context) ApiSubscribeV1SiteSubscribePostRequest {
-	return ApiSubscribeV1SiteSubscribePostRequest{
+func (a *V1SiteAPIService) Subscribe(ctx context.Context) ApiSubscribeRequest {
+	return ApiSubscribeRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -429,7 +429,7 @@ func (a *V1SiteAPIService) SubscribeV1SiteSubscribePost(ctx context.Context) Api
 // Execute executes the request
 //
 //	@return SiteAcceptedResponse
-func (a *V1SiteAPIService) SubscribeV1SiteSubscribePostExecute(r ApiSubscribeV1SiteSubscribePostRequest) (*SiteAcceptedResponse, *http.Response, error) {
+func (a *V1SiteAPIService) SubscribeExecute(r ApiSubscribeRequest) (*SiteAcceptedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -437,7 +437,7 @@ func (a *V1SiteAPIService) SubscribeV1SiteSubscribePostExecute(r ApiSubscribeV1S
 		localVarReturnValue *SiteAcceptedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.SubscribeV1SiteSubscribePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.Subscribe")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -583,31 +583,31 @@ func (a *V1SiteAPIService) SubscribeV1SiteSubscribePostExecute(r ApiSubscribeV1S
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUnsubscribeV1SiteUnsubscribePostRequest struct {
+type ApiUnsubscribeRequest struct {
 	ctx                      context.Context
 	ApiService               *V1SiteAPIService
 	subscriptionTokenRequest *SubscriptionTokenRequest
 }
 
-func (r ApiUnsubscribeV1SiteUnsubscribePostRequest) SubscriptionTokenRequest(subscriptionTokenRequest SubscriptionTokenRequest) ApiUnsubscribeV1SiteUnsubscribePostRequest {
+func (r ApiUnsubscribeRequest) SubscriptionTokenRequest(subscriptionTokenRequest SubscriptionTokenRequest) ApiUnsubscribeRequest {
 	r.subscriptionTokenRequest = &subscriptionTokenRequest
 	return r
 }
 
-func (r ApiUnsubscribeV1SiteUnsubscribePostRequest) Execute() (*SubscriptionStatusResponse, *http.Response, error) {
-	return r.ApiService.UnsubscribeV1SiteUnsubscribePostExecute(r)
+func (r ApiUnsubscribeRequest) Execute() (*SubscriptionStatusResponse, *http.Response, error) {
+	return r.ApiService.UnsubscribeExecute(r)
 }
 
 /*
-UnsubscribeV1SiteUnsubscribePost Unsubscribe from product updates
+Unsubscribe Unsubscribe from product updates
 
 Uses the token from an update email's unsubscribe link. Idempotent.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiUnsubscribeV1SiteUnsubscribePostRequest
+	@return ApiUnsubscribeRequest
 */
-func (a *V1SiteAPIService) UnsubscribeV1SiteUnsubscribePost(ctx context.Context) ApiUnsubscribeV1SiteUnsubscribePostRequest {
-	return ApiUnsubscribeV1SiteUnsubscribePostRequest{
+func (a *V1SiteAPIService) Unsubscribe(ctx context.Context) ApiUnsubscribeRequest {
+	return ApiUnsubscribeRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -616,7 +616,7 @@ func (a *V1SiteAPIService) UnsubscribeV1SiteUnsubscribePost(ctx context.Context)
 // Execute executes the request
 //
 //	@return SubscriptionStatusResponse
-func (a *V1SiteAPIService) UnsubscribeV1SiteUnsubscribePostExecute(r ApiUnsubscribeV1SiteUnsubscribePostRequest) (*SubscriptionStatusResponse, *http.Response, error) {
+func (a *V1SiteAPIService) UnsubscribeExecute(r ApiUnsubscribeRequest) (*SubscriptionStatusResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -624,7 +624,7 @@ func (a *V1SiteAPIService) UnsubscribeV1SiteUnsubscribePostExecute(r ApiUnsubscr
 		localVarReturnValue *SubscriptionStatusResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.UnsubscribeV1SiteUnsubscribePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1SiteAPIService.Unsubscribe")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -22,29 +22,29 @@ import (
 // V1AuthWebAPIService V1AuthWebAPI service
 type V1AuthWebAPIService service
 
-type ApiWebGoogleV1AuthWebGooglePostRequest struct {
+type ApiWebGoogleRequest struct {
 	ctx               context.Context
 	ApiService        *V1AuthWebAPIService
 	googleAuthRequest *GoogleAuthRequest
 }
 
-func (r ApiWebGoogleV1AuthWebGooglePostRequest) GoogleAuthRequest(googleAuthRequest GoogleAuthRequest) ApiWebGoogleV1AuthWebGooglePostRequest {
+func (r ApiWebGoogleRequest) GoogleAuthRequest(googleAuthRequest GoogleAuthRequest) ApiWebGoogleRequest {
 	r.googleAuthRequest = &googleAuthRequest
 	return r
 }
 
-func (r ApiWebGoogleV1AuthWebGooglePostRequest) Execute() (*WebSessionResponse, *http.Response, error) {
-	return r.ApiService.WebGoogleV1AuthWebGooglePostExecute(r)
+func (r ApiWebGoogleRequest) Execute() (*WebSessionResponse, *http.Response, error) {
+	return r.ApiService.WebGoogleExecute(r)
 }
 
 /*
-WebGoogleV1AuthWebGooglePost Browser Google sign-in (cookie)
+WebGoogle Browser Google sign-in (cookie)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiWebGoogleV1AuthWebGooglePostRequest
+	@return ApiWebGoogleRequest
 */
-func (a *V1AuthWebAPIService) WebGoogleV1AuthWebGooglePost(ctx context.Context) ApiWebGoogleV1AuthWebGooglePostRequest {
-	return ApiWebGoogleV1AuthWebGooglePostRequest{
+func (a *V1AuthWebAPIService) WebGoogle(ctx context.Context) ApiWebGoogleRequest {
+	return ApiWebGoogleRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -53,7 +53,7 @@ func (a *V1AuthWebAPIService) WebGoogleV1AuthWebGooglePost(ctx context.Context) 
 // Execute executes the request
 //
 //	@return WebSessionResponse
-func (a *V1AuthWebAPIService) WebGoogleV1AuthWebGooglePostExecute(r ApiWebGoogleV1AuthWebGooglePostRequest) (*WebSessionResponse, *http.Response, error) {
+func (a *V1AuthWebAPIService) WebGoogleExecute(r ApiWebGoogleRequest) (*WebSessionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -61,7 +61,7 @@ func (a *V1AuthWebAPIService) WebGoogleV1AuthWebGooglePostExecute(r ApiWebGoogle
 		localVarReturnValue *WebSessionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebGoogleV1AuthWebGooglePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebGoogle")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -207,29 +207,29 @@ func (a *V1AuthWebAPIService) WebGoogleV1AuthWebGooglePostExecute(r ApiWebGoogle
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiWebLoginV1AuthWebLoginPostRequest struct {
+type ApiWebLoginRequest struct {
 	ctx          context.Context
 	ApiService   *V1AuthWebAPIService
 	loginRequest *LoginRequest
 }
 
-func (r ApiWebLoginV1AuthWebLoginPostRequest) LoginRequest(loginRequest LoginRequest) ApiWebLoginV1AuthWebLoginPostRequest {
+func (r ApiWebLoginRequest) LoginRequest(loginRequest LoginRequest) ApiWebLoginRequest {
 	r.loginRequest = &loginRequest
 	return r
 }
 
-func (r ApiWebLoginV1AuthWebLoginPostRequest) Execute() (*WebSessionResponse, *http.Response, error) {
-	return r.ApiService.WebLoginV1AuthWebLoginPostExecute(r)
+func (r ApiWebLoginRequest) Execute() (*WebSessionResponse, *http.Response, error) {
+	return r.ApiService.WebLoginExecute(r)
 }
 
 /*
-WebLoginV1AuthWebLoginPost Browser sign-in (cookie)
+WebLogin Browser sign-in (cookie)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiWebLoginV1AuthWebLoginPostRequest
+	@return ApiWebLoginRequest
 */
-func (a *V1AuthWebAPIService) WebLoginV1AuthWebLoginPost(ctx context.Context) ApiWebLoginV1AuthWebLoginPostRequest {
-	return ApiWebLoginV1AuthWebLoginPostRequest{
+func (a *V1AuthWebAPIService) WebLogin(ctx context.Context) ApiWebLoginRequest {
+	return ApiWebLoginRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -238,7 +238,7 @@ func (a *V1AuthWebAPIService) WebLoginV1AuthWebLoginPost(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return WebSessionResponse
-func (a *V1AuthWebAPIService) WebLoginV1AuthWebLoginPostExecute(r ApiWebLoginV1AuthWebLoginPostRequest) (*WebSessionResponse, *http.Response, error) {
+func (a *V1AuthWebAPIService) WebLoginExecute(r ApiWebLoginRequest) (*WebSessionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -246,7 +246,7 @@ func (a *V1AuthWebAPIService) WebLoginV1AuthWebLoginPostExecute(r ApiWebLoginV1A
 		localVarReturnValue *WebSessionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebLoginV1AuthWebLoginPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebLogin")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -392,37 +392,37 @@ func (a *V1AuthWebAPIService) WebLoginV1AuthWebLoginPostExecute(r ApiWebLoginV1A
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiWebLogoutV1AuthWebLogoutPostRequest struct {
+type ApiWebLogoutRequest struct {
 	ctx        context.Context
 	ApiService *V1AuthWebAPIService
 }
 
-func (r ApiWebLogoutV1AuthWebLogoutPostRequest) Execute() (*http.Response, error) {
-	return r.ApiService.WebLogoutV1AuthWebLogoutPostExecute(r)
+func (r ApiWebLogoutRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WebLogoutExecute(r)
 }
 
 /*
-WebLogoutV1AuthWebLogoutPost Browser sign-out (cookie)
+WebLogout Browser sign-out (cookie)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiWebLogoutV1AuthWebLogoutPostRequest
+	@return ApiWebLogoutRequest
 */
-func (a *V1AuthWebAPIService) WebLogoutV1AuthWebLogoutPost(ctx context.Context) ApiWebLogoutV1AuthWebLogoutPostRequest {
-	return ApiWebLogoutV1AuthWebLogoutPostRequest{
+func (a *V1AuthWebAPIService) WebLogout(ctx context.Context) ApiWebLogoutRequest {
+	return ApiWebLogoutRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-func (a *V1AuthWebAPIService) WebLogoutV1AuthWebLogoutPostExecute(r ApiWebLogoutV1AuthWebLogoutPostRequest) (*http.Response, error) {
+func (a *V1AuthWebAPIService) WebLogoutExecute(r ApiWebLogoutRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodPost
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebLogoutV1AuthWebLogoutPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebLogout")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -554,23 +554,23 @@ func (a *V1AuthWebAPIService) WebLogoutV1AuthWebLogoutPostExecute(r ApiWebLogout
 	return localVarHTTPResponse, nil
 }
 
-type ApiWebRefreshV1AuthWebRefreshPostRequest struct {
+type ApiWebRefreshRequest struct {
 	ctx        context.Context
 	ApiService *V1AuthWebAPIService
 }
 
-func (r ApiWebRefreshV1AuthWebRefreshPostRequest) Execute() (*WebSessionResponse, *http.Response, error) {
-	return r.ApiService.WebRefreshV1AuthWebRefreshPostExecute(r)
+func (r ApiWebRefreshRequest) Execute() (*WebSessionResponse, *http.Response, error) {
+	return r.ApiService.WebRefreshExecute(r)
 }
 
 /*
-WebRefreshV1AuthWebRefreshPost Refresh via cookie
+WebRefresh Refresh via cookie
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiWebRefreshV1AuthWebRefreshPostRequest
+	@return ApiWebRefreshRequest
 */
-func (a *V1AuthWebAPIService) WebRefreshV1AuthWebRefreshPost(ctx context.Context) ApiWebRefreshV1AuthWebRefreshPostRequest {
-	return ApiWebRefreshV1AuthWebRefreshPostRequest{
+func (a *V1AuthWebAPIService) WebRefresh(ctx context.Context) ApiWebRefreshRequest {
+	return ApiWebRefreshRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -579,7 +579,7 @@ func (a *V1AuthWebAPIService) WebRefreshV1AuthWebRefreshPost(ctx context.Context
 // Execute executes the request
 //
 //	@return WebSessionResponse
-func (a *V1AuthWebAPIService) WebRefreshV1AuthWebRefreshPostExecute(r ApiWebRefreshV1AuthWebRefreshPostRequest) (*WebSessionResponse, *http.Response, error) {
+func (a *V1AuthWebAPIService) WebRefreshExecute(r ApiWebRefreshRequest) (*WebSessionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -587,7 +587,7 @@ func (a *V1AuthWebAPIService) WebRefreshV1AuthWebRefreshPostExecute(r ApiWebRefr
 		localVarReturnValue *WebSessionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebRefreshV1AuthWebRefreshPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AuthWebAPIService.WebRefresh")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
