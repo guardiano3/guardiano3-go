@@ -1,7 +1,7 @@
 /*
 GuardianO3 API
 
-Real-time scam detection for phone calls.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
+Real-time scam detection for audio and text.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
 
 API version: 1.0.0
 Contact: support@guardiano3.com
@@ -23,9 +23,9 @@ var _ MappedNullable = &HistoryEntry{}
 
 // HistoryEntry struct for HistoryEntry
 type HistoryEntry struct {
-	Direction   string         `json:"direction"`
+	Direction   NullableString `json:"direction,omitempty"`
 	Id          string         `json:"id"`
-	PhoneNumber string         `json:"phoneNumber"`
+	PhoneNumber NullableString `json:"phoneNumber,omitempty"`
 	RiskLevel   RiskLevel      `json:"riskLevel"`
 	Summary     NullableString `json:"summary,omitempty"`
 	Timestamp   time.Time      `json:"timestamp"`
@@ -37,11 +37,9 @@ type _HistoryEntry HistoryEntry
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewHistoryEntry(direction string, id string, phoneNumber string, riskLevel RiskLevel, timestamp time.Time) *HistoryEntry {
+func NewHistoryEntry(id string, riskLevel RiskLevel, timestamp time.Time) *HistoryEntry {
 	this := HistoryEntry{}
-	this.Direction = direction
 	this.Id = id
-	this.PhoneNumber = phoneNumber
 	this.RiskLevel = riskLevel
 	this.Timestamp = timestamp
 	return &this
@@ -55,28 +53,47 @@ func NewHistoryEntryWithDefaults() *HistoryEntry {
 	return &this
 }
 
-// GetDirection returns the Direction field value
+// GetDirection returns the Direction field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *HistoryEntry) GetDirection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Direction.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.Direction
+	return *o.Direction.Get()
 }
 
-// GetDirectionOk returns a tuple with the Direction field value
+// GetDirectionOk returns a tuple with the Direction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *HistoryEntry) GetDirectionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Direction, true
+	return o.Direction.Get(), o.Direction.IsSet()
 }
 
-// SetDirection sets field value
+// HasDirection returns a boolean if a field has been set.
+func (o *HistoryEntry) HasDirection() bool {
+	if o != nil && o.Direction.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDirection gets a reference to the given NullableString and assigns it to the Direction field.
 func (o *HistoryEntry) SetDirection(v string) {
-	o.Direction = v
+	o.Direction.Set(&v)
+}
+
+// SetDirectionNil sets the value for Direction to be an explicit nil
+func (o *HistoryEntry) SetDirectionNil() {
+	o.Direction.Set(nil)
+}
+
+// UnsetDirection ensures that no value is present for Direction, not even an explicit nil
+func (o *HistoryEntry) UnsetDirection() {
+	o.Direction.Unset()
 }
 
 // GetId returns the Id field value
@@ -103,28 +120,47 @@ func (o *HistoryEntry) SetId(v string) {
 	o.Id = v
 }
 
-// GetPhoneNumber returns the PhoneNumber field value
+// GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *HistoryEntry) GetPhoneNumber() string {
-	if o == nil {
+	if o == nil || IsNil(o.PhoneNumber.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.PhoneNumber
+	return *o.PhoneNumber.Get()
 }
 
-// GetPhoneNumberOk returns a tuple with the PhoneNumber field value
+// GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *HistoryEntry) GetPhoneNumberOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.PhoneNumber, true
+	return o.PhoneNumber.Get(), o.PhoneNumber.IsSet()
 }
 
-// SetPhoneNumber sets field value
+// HasPhoneNumber returns a boolean if a field has been set.
+func (o *HistoryEntry) HasPhoneNumber() bool {
+	if o != nil && o.PhoneNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhoneNumber gets a reference to the given NullableString and assigns it to the PhoneNumber field.
 func (o *HistoryEntry) SetPhoneNumber(v string) {
-	o.PhoneNumber = v
+	o.PhoneNumber.Set(&v)
+}
+
+// SetPhoneNumberNil sets the value for PhoneNumber to be an explicit nil
+func (o *HistoryEntry) SetPhoneNumberNil() {
+	o.PhoneNumber.Set(nil)
+}
+
+// UnsetPhoneNumber ensures that no value is present for PhoneNumber, not even an explicit nil
+func (o *HistoryEntry) UnsetPhoneNumber() {
+	o.PhoneNumber.Unset()
 }
 
 // GetRiskLevel returns the RiskLevel field value
@@ -228,9 +264,13 @@ func (o HistoryEntry) MarshalJSON() ([]byte, error) {
 
 func (o HistoryEntry) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["direction"] = o.Direction
+	if o.Direction.IsSet() {
+		toSerialize["direction"] = o.Direction.Get()
+	}
 	toSerialize["id"] = o.Id
-	toSerialize["phoneNumber"] = o.PhoneNumber
+	if o.PhoneNumber.IsSet() {
+		toSerialize["phoneNumber"] = o.PhoneNumber.Get()
+	}
 	toSerialize["riskLevel"] = o.RiskLevel
 	if o.Summary.IsSet() {
 		toSerialize["summary"] = o.Summary.Get()
@@ -244,9 +284,7 @@ func (o *HistoryEntry) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"direction",
 		"id",
-		"phoneNumber",
 		"riskLevel",
 		"timestamp",
 	}

@@ -1,7 +1,7 @@
 /*
 GuardianO3 API
 
-Real-time scam detection for phone calls.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
+Real-time scam detection for audio and text.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
 
 API version: 1.0.0
 Contact: support@guardiano3.com
@@ -21,7 +21,7 @@ import (
 // checks if the AuthSessionResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &AuthSessionResponse{}
 
-// AuthSessionResponse A signed-in session (a device), not a monitored call.  Named to disambiguate from `product.SessionResponse`, which is a call session. Two Pydantic classes sharing a name is invisible on the server but produces `SchemasV1AuthSessionResponse` as a generated SDK type -- the contract's names are part of its public surface.
+// AuthSessionResponse A signed-in session (a device), not an analysis session.  Named to disambiguate from `product.SessionResponse`, which is an analysis session. Two Pydantic classes sharing a name is invisible on the server but produces `SchemasV1AuthSessionResponse` as a generated SDK type -- the contract's names are part of its public surface.
 type AuthSessionResponse struct {
 	CreatedAt  time.Time      `json:"createdAt"`
 	Current    *bool          `json:"current,omitempty"`
