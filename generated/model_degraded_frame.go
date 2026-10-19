@@ -1,7 +1,7 @@
 /*
 GuardianO3 API
 
-Real-time scam detection for phone calls.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
+Real-time scam detection for audio and text.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
 
 API version: 1.0.0
 Contact: support@guardiano3.com
@@ -20,7 +20,7 @@ import (
 // checks if the DegradedFrame type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &DegradedFrame{}
 
-// DegradedFrame Part of the call was not analysed. The session goes on.  Sent on the decision stream when a stretch of audio could not be transcribed, or transcription timed out. That stretch produced no decision, so a quiet stream must not be read as \"nothing suspicious was said\". Treat the verdict as incomplete while these arrive: escalate on your own rules (for example, fall back to your existing controls) rather than on a missing alert.  Not an “ErrorFrame“: that one precedes a close; this one does not.
+// DegradedFrame Part of the audio was not analysed. The session goes on.  Sent on the decision stream when a stretch of audio could not be transcribed, or transcription timed out. That stretch produced no decision, so a quiet stream must not be read as \"nothing suspicious was said\". Treat the verdict as incomplete while these arrive: escalate on your own rules (for example, fall back to your existing controls) rather than on a missing alert.  Not an “ErrorFrame“: that one precedes a close; this one does not.
 type DegradedFrame struct {
 	Reason    DegradedReason `json:"reason"`
 	SessionId string         `json:"sessionId"`
