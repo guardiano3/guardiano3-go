@@ -1,7 +1,7 @@
 /*
 GuardianO3 API
 
-Real-time scam detection for phone calls.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
+Real-time scam detection for audio and text.  Authenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.  Errors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.  **Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.
 
 API version: 1.0.0
 Contact: support@guardiano3.com
@@ -30,7 +30,7 @@ type DecisionUpdateFrame struct {
 	FraudType       NullableString        `json:"fraudType,omitempty"`
 	LatencyMs       NullableFloat32       `json:"latencyMs,omitempty"`
 	ProcessedAt     NullableTime          `json:"processedAt,omitempty"`
-	// The session's alert level after this chunk. It can rise or fall as the call goes on; act on the latest value.
+	// The session's alert level after this chunk. It can rise or fall as the session goes on; act on the latest value.
 	RiskLevel          RiskLevel                 `json:"riskLevel"`
 	RiskScore          NullableFloat32           `json:"riskScore,omitempty"`
 	SessionId          string                    `json:"sessionId"`

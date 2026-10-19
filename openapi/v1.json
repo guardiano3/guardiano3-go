@@ -500,7 +500,7 @@
         "type": "object"
       },
       "AuthSessionResponse": {
-        "description": "A signed-in session (a device), not a monitored call.\n\nNamed to disambiguate from `product.SessionResponse`, which is a call\nsession. Two Pydantic classes sharing a name is invisible on the server but\nproduces `SchemasV1AuthSessionResponse` as a generated SDK type -- the\ncontract's names are part of its public surface.",
+        "description": "A signed-in session (a device), not an analysis session.\n\nNamed to disambiguate from `product.SessionResponse`, which is an analysis\nsession. Two Pydantic classes sharing a name is invisible on the server but\nproduces `SchemasV1AuthSessionResponse` as a generated SDK type -- the\ncontract's names are part of its public surface.",
         "properties": {
           "createdAt": {
             "format": "date-time",
@@ -928,7 +928,7 @@
           },
           "riskLevel": {
             "$ref": "#/components/schemas/RiskLevel",
-            "description": "The session's alert level after this chunk. It can rise or fall as the call goes on; act on the latest value."
+            "description": "The session's alert level after this chunk. It can rise or fall as the session goes on; act on the latest value."
           },
           "riskScore": {
             "anyOf": [
@@ -1111,7 +1111,7 @@
           },
           "riskLevel": {
             "$ref": "#/components/schemas/RiskLevel",
-            "description": "The session's alert level after this chunk. It can rise or fall as the call goes on; act on the latest value."
+            "description": "The session's alert level after this chunk. It can rise or fall as the session goes on; act on the latest value."
           },
           "riskScore": {
             "anyOf": [
@@ -1216,7 +1216,7 @@
         "type": "object"
       },
       "DegradedFrame": {
-        "description": "Part of the call was not analysed. The session goes on.\n\nSent on the decision stream when a stretch of audio could not be\ntranscribed, or transcription timed out. That stretch produced no decision, so a quiet stream\nmust not be read as \"nothing suspicious was said\". Treat the verdict as\nincomplete while these arrive: escalate on your own rules (for example,\nfall back to your existing controls) rather than on a missing alert.\n\nNot an ``ErrorFrame``: that one precedes a close; this one does not.",
+        "description": "Part of the audio was not analysed. The session goes on.\n\nSent on the decision stream when a stretch of audio could not be\ntranscribed, or transcription timed out. That stretch produced no decision, so a quiet stream\nmust not be read as \"nothing suspicious was said\". Treat the verdict as\nincomplete while these arrive: escalate on your own rules (for example,\nfall back to your existing controls) rather than on a missing alert.\n\nNot an ``ErrorFrame``: that one precedes a close; this one does not.",
         "properties": {
           "reason": {
             "$ref": "#/components/schemas/DegradedReason"
@@ -1451,16 +1451,32 @@
       "HistoryEntry": {
         "properties": {
           "direction": {
-            "title": "Direction",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null when the session was created without one.",
+            "title": "Direction"
           },
           "id": {
             "title": "Id",
             "type": "string"
           },
           "phoneNumber": {
-            "title": "Phonenumber",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null when the session was created without one.",
+            "title": "Phonenumber"
           },
           "riskLevel": {
             "$ref": "#/components/schemas/RiskLevel"
@@ -1484,8 +1500,6 @@
         },
         "required": [
           "id",
-          "phoneNumber",
-          "direction",
           "timestamp",
           "riskLevel"
         ],
@@ -2230,9 +2244,17 @@
       "SessionCreateRequest": {
         "properties": {
           "direction": {
-            "pattern": "^(incoming|outgoing)$",
-            "title": "Direction",
-            "type": "string"
+            "anyOf": [
+              {
+                "pattern": "^(incoming|outgoing)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional. `incoming` or `outgoing`, when the audio is from a phone line.",
+            "title": "Direction"
           },
           "language": {
             "anyOf": [
@@ -2247,17 +2269,21 @@
             "title": "Language"
           },
           "phoneNumber": {
-            "maxLength": 32,
-            "minLength": 3,
-            "pattern": "^\\+?[0-9 ()\\-.]{3,32}$",
-            "title": "Phonenumber",
-            "type": "string"
+            "anyOf": [
+              {
+                "maxLength": 32,
+                "minLength": 3,
+                "pattern": "^\\+?[0-9 ()\\-.]{3,32}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional. The phone number of the other party, when the audio is from a phone line.",
+            "title": "Phonenumber"
           }
         },
-        "required": [
-          "phoneNumber",
-          "direction"
-        ],
         "title": "SessionCreateRequest",
         "type": "object"
       },
@@ -2300,8 +2326,16 @@
             "type": "array"
           },
           "direction": {
-            "title": "Direction",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null when the session was created without one.",
+            "title": "Direction"
           },
           "duration": {
             "title": "Duration",
@@ -2323,8 +2357,16 @@
             "type": "string"
           },
           "phoneNumber": {
-            "title": "Phonenumber",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null when the session was created without one.",
+            "title": "Phonenumber"
           },
           "riskLevel": {
             "$ref": "#/components/schemas/RiskLevel"
@@ -2363,8 +2405,6 @@
         },
         "required": [
           "id",
-          "phoneNumber",
-          "direction",
           "timestamp",
           "duration",
           "riskLevel",
@@ -2878,7 +2918,7 @@
       "email": "support@guardiano3.com",
       "name": "GuardianO3 Support"
     },
-    "description": "Real-time scam detection for phone calls.\n\nAuthenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.\n\nErrors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.\n\n**Live-call channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.",
+    "description": "Real-time scam detection for audio and text.\n\nAuthenticate with a user access token or an API key; both are sent as `Authorization: Bearer <value>` and are distinguished by the `go3_` key prefix.\n\nErrors share one envelope -- branch on `error.code`, never on `error.message`. Every response carries `X-Request-Id`; quote it in bug reports.\n\n**Live session channels** (`/v1/sessions/{session_id}/audio` and `/v1/sessions/{session_id}/stream`) use WebSocket, not HTTP. They are not listed under `paths` because OpenAPI 3.x has no first-class WebSocket support; their frame shapes and close codes are declared in the `x-websockets` extension at the top level of this document.",
     "license": {
       "identifier": "Apache-2.0",
       "name": "Apache-2.0"
@@ -3024,7 +3064,7 @@
     },
     "/v1/analyze/audio": {
       "post": {
-        "description": "Requires the `analysis:write` scope. Uploads are capped at `ANALYZE_MAX_UPLOAD_BYTES` and must carry an audio content type. Clips longer than `ANALYZE_MAX_AUDIO_SECONDS` (120 s by default) are refused with `413`, not truncated -- send the part of the call to be scored, or stream live calls over the session WebSocket. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.\n\n`Idempotency-Key` is **not** supported here: fingerprinting the payload would mean holding and hashing the whole upload a second time, which doubles the memory cost of the largest request the API accepts. Retry safety for audio comes from the request being stateless -- the audio is not persisted, so a duplicate costs a re-analysis (and counts as a second analysis in analytics), not a duplicate record of the call.",
+        "description": "Requires the `analysis:write` scope. Uploads are capped at `ANALYZE_MAX_UPLOAD_BYTES` and must carry an audio content type. Clips longer than `ANALYZE_MAX_AUDIO_SECONDS` (120 s by default) are refused with `413`, not truncated -- send the part of the audio to be scored, or stream live audio over the session WebSockets in real time. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.\n\n`Idempotency-Key` is **not** supported here: fingerprinting the payload would mean holding and hashing the whole upload a second time, which doubles the memory cost of the largest request the API accepts. Retry safety for audio comes from the request being stateless -- the audio is not persisted, so a duplicate costs a re-analysis (and counts as a second analysis in analytics), not a duplicate record of the audio.",
         "operationId": "analyze_audio_v1_analyze_audio_post",
         "requestBody": {
           "content": {
@@ -3929,7 +3969,7 @@
     },
     "/v1/auth/delete-account": {
       "post": {
-        "description": "Erases the account's personal data: call history and transcripts, emergency contacts, sessions, MFA factors and pending tokens. API keys are revoked. The email address is freed for re-registration.\n\n**Irreversible, and immediate.** There is no recovery period.\n\nRequires the current password when the account has one. An account that only ever signed in with a provider has no password to check, so the session itself is the proof.",
+        "description": "Erases the account's personal data: session history and transcripts, feedback labels, sign-in sessions, MFA factors and pending tokens. API keys are revoked. The email address is freed for re-registration.\n\n**Irreversible, and immediate.** There is no recovery period.\n\nRequires the current password when the account has one. An account that only ever signed in with a provider has no password to check, so the session itself is the proof.",
         "operationId": "delete_account_v1_auth_delete_account_post",
         "requestBody": {
           "content": {
@@ -7446,7 +7486,7 @@
             "HTTPBearer": []
           }
         ],
-        "summary": "Start a call session",
+        "summary": "Start a session",
         "tags": [
           "v1-sessions"
         ],
@@ -7820,7 +7860,7 @@
             "HTTPBearer": []
           }
         ],
-        "summary": "Finalise a call session",
+        "summary": "Finalise a session",
         "tags": [
           "v1-sessions"
         ],
@@ -8553,7 +8593,7 @@
   "tags": [],
   "x-audiences": {
     "console": "Requires a signed-in user. Creating and managing API keys, the account's own identity and profile, usage stats, and policy acceptance. What a developer does in the developer console; not what their integration calls.",
-    "public": "Callable with an API key. The surface an integration is built on: analysis, live-call sessions and streams, history, and credential introspection."
+    "public": "Callable with an API key. The surface an integration is built on: analysis, live sessions and streams, history, and credential introspection."
   },
   "x-websockets": [
     {
@@ -8568,7 +8608,7 @@
         },
         {
           "code": 4029,
-          "description": "Too many concurrent live-call connections"
+          "description": "Too many concurrent live session connections"
         },
         {
           "code": 4008,
@@ -8622,10 +8662,10 @@
         },
         {
           "code": 4029,
-          "description": "Too many concurrent live-call connections"
+          "description": "Too many concurrent live session connections"
         }
       ],
-      "description": "Text downlink. Connect after `POST /v1/sessions`; every frame is JSON and carries a `type`.\n\n1. Send the `AuthFrame` as the first text frame. A user access token or an API key carrying `sessions:read`.\n2. Wait for `ReadyFrame`.\n3. Handle frames by `type`. Ignore types you do not recognise -- new ones may be added without a version change.\n\n**Provisional decisions.** A `DecisionFrame` with `verificationStatus: pending` is provisional: a `DecisionUpdateFrame` for the *same* chunk follows. Replace the earlier decision in place; do not append. The update's values, including `riskLevel`, supersede the provisional ones.\n\n`PingFrame` arrives after 20 s of silence and needs no reply. An `ErrorFrame` precedes any close the server initiates.\n\n**Unheard audio.** A `DegradedFrame` means a stretch of the call could not be transcribed, so no decision covers it; the session goes on. Do not read a quiet stream as a safe call while these arrive.",
+      "description": "Text downlink. Connect after `POST /v1/sessions`; every frame is JSON and carries a `type`.\n\n1. Send the `AuthFrame` as the first text frame. A user access token or an API key carrying `sessions:read`.\n2. Wait for `ReadyFrame`.\n3. Handle frames by `type`. Ignore types you do not recognise -- new ones may be added without a version change.\n\n**Provisional decisions.** A `DecisionFrame` with `verificationStatus: pending` is provisional: a `DecisionUpdateFrame` for the *same* chunk follows. Replace the earlier decision in place; do not append. The update's values, including `riskLevel`, supersede the provisional ones.\n\n`PingFrame` arrives after 20 s of silence and needs no reply. An `ErrorFrame` precedes any close the server initiates.\n\n**Unheard audio.** A `DegradedFrame` means a stretch of the audio could not be transcribed, so no decision covers it; the session goes on. Do not read a quiet stream as \"nothing suspicious\" while these arrive.",
       "direction": "server-to-client",
       "frames": {
         "clientToServer": [
