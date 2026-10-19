@@ -22,7 +22,7 @@ import (
 // V1AccountAPIService V1AccountAPI service
 type V1AccountAPIService service
 
-type ApiGetAnalyticsV1AnalyticsGetRequest struct {
+type ApiGetAnalyticsRequest struct {
 	ctx         context.Context
 	ApiService  *V1AccountAPIService
 	window      *string
@@ -30,30 +30,30 @@ type ApiGetAnalyticsV1AnalyticsGetRequest struct {
 }
 
 // Rolling window, ending now.
-func (r ApiGetAnalyticsV1AnalyticsGetRequest) Window(window string) ApiGetAnalyticsV1AnalyticsGetRequest {
+func (r ApiGetAnalyticsRequest) Window(window string) ApiGetAnalyticsRequest {
 	r.window = &window
 	return r
 }
 
-func (r ApiGetAnalyticsV1AnalyticsGetRequest) Environment(environment string) ApiGetAnalyticsV1AnalyticsGetRequest {
+func (r ApiGetAnalyticsRequest) Environment(environment string) ApiGetAnalyticsRequest {
 	r.environment = &environment
 	return r
 }
 
-func (r ApiGetAnalyticsV1AnalyticsGetRequest) Execute() (*AnalyticsResponse, *http.Response, error) {
-	return r.ApiService.GetAnalyticsV1AnalyticsGetExecute(r)
+func (r ApiGetAnalyticsRequest) Execute() (*AnalyticsResponse, *http.Response, error) {
+	return r.ApiService.GetAnalyticsExecute(r)
 }
 
 /*
-GetAnalyticsV1AnalyticsGet Your organization's analytics
+GetAnalytics Your organization's analytics
 
 Sessions, analyses, verdicts and audio minutes for a rolling window. Organization-wide for organization members; your own otherwise. `environment=live` counts live API keys; `environment=test` counts test keys and the console sandbox. The two are never combined. Requires a signed-in user; API keys are not accepted.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetAnalyticsV1AnalyticsGetRequest
+	@return ApiGetAnalyticsRequest
 */
-func (a *V1AccountAPIService) GetAnalyticsV1AnalyticsGet(ctx context.Context) ApiGetAnalyticsV1AnalyticsGetRequest {
-	return ApiGetAnalyticsV1AnalyticsGetRequest{
+func (a *V1AccountAPIService) GetAnalytics(ctx context.Context) ApiGetAnalyticsRequest {
+	return ApiGetAnalyticsRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -62,7 +62,7 @@ func (a *V1AccountAPIService) GetAnalyticsV1AnalyticsGet(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return AnalyticsResponse
-func (a *V1AccountAPIService) GetAnalyticsV1AnalyticsGetExecute(r ApiGetAnalyticsV1AnalyticsGetRequest) (*AnalyticsResponse, *http.Response, error) {
+func (a *V1AccountAPIService) GetAnalyticsExecute(r ApiGetAnalyticsRequest) (*AnalyticsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -70,7 +70,7 @@ func (a *V1AccountAPIService) GetAnalyticsV1AnalyticsGetExecute(r ApiGetAnalytic
 		localVarReturnValue *AnalyticsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AccountAPIService.GetAnalyticsV1AnalyticsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AccountAPIService.GetAnalytics")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -223,23 +223,23 @@ func (a *V1AccountAPIService) GetAnalyticsV1AnalyticsGetExecute(r ApiGetAnalytic
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetProfileV1UserProfileGetRequest struct {
+type ApiGetProfileRequest struct {
 	ctx        context.Context
 	ApiService *V1AccountAPIService
 }
 
-func (r ApiGetProfileV1UserProfileGetRequest) Execute() (*ProfileResponse, *http.Response, error) {
-	return r.ApiService.GetProfileV1UserProfileGetExecute(r)
+func (r ApiGetProfileRequest) Execute() (*ProfileResponse, *http.Response, error) {
+	return r.ApiService.GetProfileExecute(r)
 }
 
 /*
-GetProfileV1UserProfileGet Your profile
+GetProfile Your profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetProfileV1UserProfileGetRequest
+	@return ApiGetProfileRequest
 */
-func (a *V1AccountAPIService) GetProfileV1UserProfileGet(ctx context.Context) ApiGetProfileV1UserProfileGetRequest {
-	return ApiGetProfileV1UserProfileGetRequest{
+func (a *V1AccountAPIService) GetProfile(ctx context.Context) ApiGetProfileRequest {
+	return ApiGetProfileRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -248,7 +248,7 @@ func (a *V1AccountAPIService) GetProfileV1UserProfileGet(ctx context.Context) Ap
 // Execute executes the request
 //
 //	@return ProfileResponse
-func (a *V1AccountAPIService) GetProfileV1UserProfileGetExecute(r ApiGetProfileV1UserProfileGetRequest) (*ProfileResponse, *http.Response, error) {
+func (a *V1AccountAPIService) GetProfileExecute(r ApiGetProfileRequest) (*ProfileResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -256,7 +256,7 @@ func (a *V1AccountAPIService) GetProfileV1UserProfileGetExecute(r ApiGetProfileV
 		localVarReturnValue *ProfileResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AccountAPIService.GetProfileV1UserProfileGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AccountAPIService.GetProfile")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -397,29 +397,29 @@ func (a *V1AccountAPIService) GetProfileV1UserProfileGetExecute(r ApiGetProfileV
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateProfileV1UserProfilePatchRequest struct {
+type ApiUpdateProfileRequest struct {
 	ctx                  context.Context
 	ApiService           *V1AccountAPIService
 	profileUpdateRequest *ProfileUpdateRequest
 }
 
-func (r ApiUpdateProfileV1UserProfilePatchRequest) ProfileUpdateRequest(profileUpdateRequest ProfileUpdateRequest) ApiUpdateProfileV1UserProfilePatchRequest {
+func (r ApiUpdateProfileRequest) ProfileUpdateRequest(profileUpdateRequest ProfileUpdateRequest) ApiUpdateProfileRequest {
 	r.profileUpdateRequest = &profileUpdateRequest
 	return r
 }
 
-func (r ApiUpdateProfileV1UserProfilePatchRequest) Execute() (*ProfileResponse, *http.Response, error) {
-	return r.ApiService.UpdateProfileV1UserProfilePatchExecute(r)
+func (r ApiUpdateProfileRequest) Execute() (*ProfileResponse, *http.Response, error) {
+	return r.ApiService.UpdateProfileExecute(r)
 }
 
 /*
-UpdateProfileV1UserProfilePatch Update your profile
+UpdateProfile Update your profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiUpdateProfileV1UserProfilePatchRequest
+	@return ApiUpdateProfileRequest
 */
-func (a *V1AccountAPIService) UpdateProfileV1UserProfilePatch(ctx context.Context) ApiUpdateProfileV1UserProfilePatchRequest {
-	return ApiUpdateProfileV1UserProfilePatchRequest{
+func (a *V1AccountAPIService) UpdateProfile(ctx context.Context) ApiUpdateProfileRequest {
+	return ApiUpdateProfileRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -428,7 +428,7 @@ func (a *V1AccountAPIService) UpdateProfileV1UserProfilePatch(ctx context.Contex
 // Execute executes the request
 //
 //	@return ProfileResponse
-func (a *V1AccountAPIService) UpdateProfileV1UserProfilePatchExecute(r ApiUpdateProfileV1UserProfilePatchRequest) (*ProfileResponse, *http.Response, error) {
+func (a *V1AccountAPIService) UpdateProfileExecute(r ApiUpdateProfileRequest) (*ProfileResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPatch
 		localVarPostBody    interface{}
@@ -436,7 +436,7 @@ func (a *V1AccountAPIService) UpdateProfileV1UserProfilePatchExecute(r ApiUpdate
 		localVarReturnValue *ProfileResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AccountAPIService.UpdateProfileV1UserProfilePatch")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AccountAPIService.UpdateProfile")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

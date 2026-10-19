@@ -23,39 +23,39 @@ import (
 // V1AnalysisAPIService V1AnalysisAPI service
 type V1AnalysisAPIService service
 
-type ApiAnalyzeAudioV1AnalyzeAudioPostRequest struct {
+type ApiAnalyzeAudioRequest struct {
 	ctx        context.Context
 	ApiService *V1AnalysisAPIService
 	file       *os.File
 	language   *string
 }
 
-func (r ApiAnalyzeAudioV1AnalyzeAudioPostRequest) File(file *os.File) ApiAnalyzeAudioV1AnalyzeAudioPostRequest {
+func (r ApiAnalyzeAudioRequest) File(file *os.File) ApiAnalyzeAudioRequest {
 	r.file = file
 	return r
 }
 
-func (r ApiAnalyzeAudioV1AnalyzeAudioPostRequest) Language(language string) ApiAnalyzeAudioV1AnalyzeAudioPostRequest {
+func (r ApiAnalyzeAudioRequest) Language(language string) ApiAnalyzeAudioRequest {
 	r.language = &language
 	return r
 }
 
-func (r ApiAnalyzeAudioV1AnalyzeAudioPostRequest) Execute() (*AnalysisResponse, *http.Response, error) {
-	return r.ApiService.AnalyzeAudioV1AnalyzeAudioPostExecute(r)
+func (r ApiAnalyzeAudioRequest) Execute() (*AnalysisResponse, *http.Response, error) {
+	return r.ApiService.AnalyzeAudioExecute(r)
 }
 
 /*
-AnalyzeAudioV1AnalyzeAudioPost Transcribe and score an audio clip
+AnalyzeAudio Transcribe and score an audio clip
 
 Requires the `analysis:write` scope. Uploads must carry an audio content type. Uploads larger than 25 MiB and clips longer than 120 seconds are refused with `413`, not truncated -- send the part of the audio to be scored, or stream live audio over the session WebSockets in real time. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.
 
 `Idempotency-Key` is **not** supported here. Retrying is safe: the audio is not stored, so a duplicate request is analysed again (and counts as a second analysis in analytics) without creating a duplicate record of the audio.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAnalyzeAudioV1AnalyzeAudioPostRequest
+	@return ApiAnalyzeAudioRequest
 */
-func (a *V1AnalysisAPIService) AnalyzeAudioV1AnalyzeAudioPost(ctx context.Context) ApiAnalyzeAudioV1AnalyzeAudioPostRequest {
-	return ApiAnalyzeAudioV1AnalyzeAudioPostRequest{
+func (a *V1AnalysisAPIService) AnalyzeAudio(ctx context.Context) ApiAnalyzeAudioRequest {
+	return ApiAnalyzeAudioRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -64,7 +64,7 @@ func (a *V1AnalysisAPIService) AnalyzeAudioV1AnalyzeAudioPost(ctx context.Contex
 // Execute executes the request
 //
 //	@return AnalysisResponse
-func (a *V1AnalysisAPIService) AnalyzeAudioV1AnalyzeAudioPostExecute(r ApiAnalyzeAudioV1AnalyzeAudioPostRequest) (*AnalysisResponse, *http.Response, error) {
+func (a *V1AnalysisAPIService) AnalyzeAudioExecute(r ApiAnalyzeAudioRequest) (*AnalysisResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -72,7 +72,7 @@ func (a *V1AnalysisAPIService) AnalyzeAudioV1AnalyzeAudioPostExecute(r ApiAnalyz
 		localVarReturnValue *AnalysisResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AnalysisAPIService.AnalyzeAudioV1AnalyzeAudioPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AnalysisAPIService.AnalyzeAudio")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -234,37 +234,37 @@ func (a *V1AnalysisAPIService) AnalyzeAudioV1AnalyzeAudioPostExecute(r ApiAnalyz
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiAnalyzeTextV1AnalyzeTextPostRequest struct {
+type ApiAnalyzeTextRequest struct {
 	ctx                 context.Context
 	ApiService          *V1AnalysisAPIService
 	textAnalysisRequest *TextAnalysisRequest
 	idempotencyKey      *string
 }
 
-func (r ApiAnalyzeTextV1AnalyzeTextPostRequest) TextAnalysisRequest(textAnalysisRequest TextAnalysisRequest) ApiAnalyzeTextV1AnalyzeTextPostRequest {
+func (r ApiAnalyzeTextRequest) TextAnalysisRequest(textAnalysisRequest TextAnalysisRequest) ApiAnalyzeTextRequest {
 	r.textAnalysisRequest = &textAnalysisRequest
 	return r
 }
 
-func (r ApiAnalyzeTextV1AnalyzeTextPostRequest) IdempotencyKey(idempotencyKey string) ApiAnalyzeTextV1AnalyzeTextPostRequest {
+func (r ApiAnalyzeTextRequest) IdempotencyKey(idempotencyKey string) ApiAnalyzeTextRequest {
 	r.idempotencyKey = &idempotencyKey
 	return r
 }
 
-func (r ApiAnalyzeTextV1AnalyzeTextPostRequest) Execute() (*AnalysisResponse, *http.Response, error) {
-	return r.ApiService.AnalyzeTextV1AnalyzeTextPostExecute(r)
+func (r ApiAnalyzeTextRequest) Execute() (*AnalysisResponse, *http.Response, error) {
+	return r.ApiService.AnalyzeTextExecute(r)
 }
 
 /*
-AnalyzeTextV1AnalyzeTextPost Score a transcript
+AnalyzeText Score a transcript
 
 Accepts `Idempotency-Key`. Requires the `analysis:write` scope.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAnalyzeTextV1AnalyzeTextPostRequest
+	@return ApiAnalyzeTextRequest
 */
-func (a *V1AnalysisAPIService) AnalyzeTextV1AnalyzeTextPost(ctx context.Context) ApiAnalyzeTextV1AnalyzeTextPostRequest {
-	return ApiAnalyzeTextV1AnalyzeTextPostRequest{
+func (a *V1AnalysisAPIService) AnalyzeText(ctx context.Context) ApiAnalyzeTextRequest {
+	return ApiAnalyzeTextRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -273,7 +273,7 @@ func (a *V1AnalysisAPIService) AnalyzeTextV1AnalyzeTextPost(ctx context.Context)
 // Execute executes the request
 //
 //	@return AnalysisResponse
-func (a *V1AnalysisAPIService) AnalyzeTextV1AnalyzeTextPostExecute(r ApiAnalyzeTextV1AnalyzeTextPostRequest) (*AnalysisResponse, *http.Response, error) {
+func (a *V1AnalysisAPIService) AnalyzeTextExecute(r ApiAnalyzeTextRequest) (*AnalysisResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -281,7 +281,7 @@ func (a *V1AnalysisAPIService) AnalyzeTextV1AnalyzeTextPostExecute(r ApiAnalyzeT
 		localVarReturnValue *AnalysisResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AnalysisAPIService.AnalyzeTextV1AnalyzeTextPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1AnalysisAPIService.AnalyzeText")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

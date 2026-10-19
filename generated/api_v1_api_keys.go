@@ -23,31 +23,31 @@ import (
 // V1ApiKeysAPIService V1ApiKeysAPI service
 type V1ApiKeysAPIService service
 
-type ApiCreateApiKeyV1ApiKeysPostRequest struct {
+type ApiCreateApiKeyRequest struct {
 	ctx                 context.Context
 	ApiService          *V1ApiKeysAPIService
 	apiKeyCreateRequest *ApiKeyCreateRequest
 }
 
-func (r ApiCreateApiKeyV1ApiKeysPostRequest) ApiKeyCreateRequest(apiKeyCreateRequest ApiKeyCreateRequest) ApiCreateApiKeyV1ApiKeysPostRequest {
+func (r ApiCreateApiKeyRequest) ApiKeyCreateRequest(apiKeyCreateRequest ApiKeyCreateRequest) ApiCreateApiKeyRequest {
 	r.apiKeyCreateRequest = &apiKeyCreateRequest
 	return r
 }
 
-func (r ApiCreateApiKeyV1ApiKeysPostRequest) Execute() (*ApiKeyCreatedResponse, *http.Response, error) {
-	return r.ApiService.CreateApiKeyV1ApiKeysPostExecute(r)
+func (r ApiCreateApiKeyRequest) Execute() (*ApiKeyCreatedResponse, *http.Response, error) {
+	return r.ApiService.CreateApiKeyExecute(r)
 }
 
 /*
-CreateApiKeyV1ApiKeysPost Create an API key
+CreateApiKey Create an API key
 
 The secret is returned **once**, in this response. It is stored only as a hash and cannot be retrieved again — if it is lost, rotate the key.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiCreateApiKeyV1ApiKeysPostRequest
+	@return ApiCreateApiKeyRequest
 */
-func (a *V1ApiKeysAPIService) CreateApiKeyV1ApiKeysPost(ctx context.Context) ApiCreateApiKeyV1ApiKeysPostRequest {
-	return ApiCreateApiKeyV1ApiKeysPostRequest{
+func (a *V1ApiKeysAPIService) CreateApiKey(ctx context.Context) ApiCreateApiKeyRequest {
+	return ApiCreateApiKeyRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -56,7 +56,7 @@ func (a *V1ApiKeysAPIService) CreateApiKeyV1ApiKeysPost(ctx context.Context) Api
 // Execute executes the request
 //
 //	@return ApiKeyCreatedResponse
-func (a *V1ApiKeysAPIService) CreateApiKeyV1ApiKeysPostExecute(r ApiCreateApiKeyV1ApiKeysPostRequest) (*ApiKeyCreatedResponse, *http.Response, error) {
+func (a *V1ApiKeysAPIService) CreateApiKeyExecute(r ApiCreateApiKeyRequest) (*ApiKeyCreatedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -64,7 +64,7 @@ func (a *V1ApiKeysAPIService) CreateApiKeyV1ApiKeysPostExecute(r ApiCreateApiKey
 		localVarReturnValue *ApiKeyCreatedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.CreateApiKeyV1ApiKeysPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.CreateApiKey")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -210,25 +210,25 @@ func (a *V1ApiKeysAPIService) CreateApiKeyV1ApiKeysPostExecute(r ApiCreateApiKey
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetApiKeyV1ApiKeysKeyIdGetRequest struct {
+type ApiGetApiKeyRequest struct {
 	ctx        context.Context
 	ApiService *V1ApiKeysAPIService
 	keyId      string
 }
 
-func (r ApiGetApiKeyV1ApiKeysKeyIdGetRequest) Execute() (*ApiKeyResponse, *http.Response, error) {
-	return r.ApiService.GetApiKeyV1ApiKeysKeyIdGetExecute(r)
+func (r ApiGetApiKeyRequest) Execute() (*ApiKeyResponse, *http.Response, error) {
+	return r.ApiService.GetApiKeyExecute(r)
 }
 
 /*
-GetApiKeyV1ApiKeysKeyIdGet Get one API key's metadata
+GetApiKey Get one API key's metadata
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param keyId
-	@return ApiGetApiKeyV1ApiKeysKeyIdGetRequest
+	@return ApiGetApiKeyRequest
 */
-func (a *V1ApiKeysAPIService) GetApiKeyV1ApiKeysKeyIdGet(ctx context.Context, keyId string) ApiGetApiKeyV1ApiKeysKeyIdGetRequest {
-	return ApiGetApiKeyV1ApiKeysKeyIdGetRequest{
+func (a *V1ApiKeysAPIService) GetApiKey(ctx context.Context, keyId string) ApiGetApiKeyRequest {
+	return ApiGetApiKeyRequest{
 		ApiService: a,
 		ctx:        ctx,
 		keyId:      keyId,
@@ -238,7 +238,7 @@ func (a *V1ApiKeysAPIService) GetApiKeyV1ApiKeysKeyIdGet(ctx context.Context, ke
 // Execute executes the request
 //
 //	@return ApiKeyResponse
-func (a *V1ApiKeysAPIService) GetApiKeyV1ApiKeysKeyIdGetExecute(r ApiGetApiKeyV1ApiKeysKeyIdGetRequest) (*ApiKeyResponse, *http.Response, error) {
+func (a *V1ApiKeysAPIService) GetApiKeyExecute(r ApiGetApiKeyRequest) (*ApiKeyResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -246,7 +246,7 @@ func (a *V1ApiKeysAPIService) GetApiKeyV1ApiKeysKeyIdGetExecute(r ApiGetApiKeyV1
 		localVarReturnValue *ApiKeyResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.GetApiKeyV1ApiKeysKeyIdGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.GetApiKey")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -399,31 +399,31 @@ func (a *V1ApiKeysAPIService) GetApiKeyV1ApiKeysKeyIdGetExecute(r ApiGetApiKeyV1
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListApiKeysV1ApiKeysGetRequest struct {
+type ApiListApiKeysRequest struct {
 	ctx            context.Context
 	ApiService     *V1ApiKeysAPIService
 	includeRevoked *bool
 }
 
-func (r ApiListApiKeysV1ApiKeysGetRequest) IncludeRevoked(includeRevoked bool) ApiListApiKeysV1ApiKeysGetRequest {
+func (r ApiListApiKeysRequest) IncludeRevoked(includeRevoked bool) ApiListApiKeysRequest {
 	r.includeRevoked = &includeRevoked
 	return r
 }
 
-func (r ApiListApiKeysV1ApiKeysGetRequest) Execute() (*ApiKeyListResponse, *http.Response, error) {
-	return r.ApiService.ListApiKeysV1ApiKeysGetExecute(r)
+func (r ApiListApiKeysRequest) Execute() (*ApiKeyListResponse, *http.Response, error) {
+	return r.ApiService.ListApiKeysExecute(r)
 }
 
 /*
-ListApiKeysV1ApiKeysGet List your API keys
+ListApiKeys List your API keys
 
 Metadata only. Secrets are not recoverable.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListApiKeysV1ApiKeysGetRequest
+	@return ApiListApiKeysRequest
 */
-func (a *V1ApiKeysAPIService) ListApiKeysV1ApiKeysGet(ctx context.Context) ApiListApiKeysV1ApiKeysGetRequest {
-	return ApiListApiKeysV1ApiKeysGetRequest{
+func (a *V1ApiKeysAPIService) ListApiKeys(ctx context.Context) ApiListApiKeysRequest {
+	return ApiListApiKeysRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -432,7 +432,7 @@ func (a *V1ApiKeysAPIService) ListApiKeysV1ApiKeysGet(ctx context.Context) ApiLi
 // Execute executes the request
 //
 //	@return ApiKeyListResponse
-func (a *V1ApiKeysAPIService) ListApiKeysV1ApiKeysGetExecute(r ApiListApiKeysV1ApiKeysGetRequest) (*ApiKeyListResponse, *http.Response, error) {
+func (a *V1ApiKeysAPIService) ListApiKeysExecute(r ApiListApiKeysRequest) (*ApiKeyListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -440,7 +440,7 @@ func (a *V1ApiKeysAPIService) ListApiKeysV1ApiKeysGetExecute(r ApiListApiKeysV1A
 		localVarReturnValue *ApiKeyListResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.ListApiKeysV1ApiKeysGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.ListApiKeys")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -587,25 +587,25 @@ func (a *V1ApiKeysAPIService) ListApiKeysV1ApiKeysGetExecute(r ApiListApiKeysV1A
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListScopesV1ApiKeysScopesGetRequest struct {
+type ApiListScopesRequest struct {
 	ctx        context.Context
 	ApiService *V1ApiKeysAPIService
 }
 
-func (r ApiListScopesV1ApiKeysScopesGetRequest) Execute() (*ScopeListResponse, *http.Response, error) {
-	return r.ApiService.ListScopesV1ApiKeysScopesGetExecute(r)
+func (r ApiListScopesRequest) Execute() (*ScopeListResponse, *http.Response, error) {
+	return r.ApiService.ListScopesExecute(r)
 }
 
 /*
-ListScopesV1ApiKeysScopesGet List the available scopes
+ListScopes List the available scopes
 
 The scope catalogue. Accepts any credential -- a user session or an API key -- because a caller choosing scopes for a new key already has one.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListScopesV1ApiKeysScopesGetRequest
+	@return ApiListScopesRequest
 */
-func (a *V1ApiKeysAPIService) ListScopesV1ApiKeysScopesGet(ctx context.Context) ApiListScopesV1ApiKeysScopesGetRequest {
-	return ApiListScopesV1ApiKeysScopesGetRequest{
+func (a *V1ApiKeysAPIService) ListScopes(ctx context.Context) ApiListScopesRequest {
+	return ApiListScopesRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -614,7 +614,7 @@ func (a *V1ApiKeysAPIService) ListScopesV1ApiKeysScopesGet(ctx context.Context) 
 // Execute executes the request
 //
 //	@return ScopeListResponse
-func (a *V1ApiKeysAPIService) ListScopesV1ApiKeysScopesGetExecute(r ApiListScopesV1ApiKeysScopesGetRequest) (*ScopeListResponse, *http.Response, error) {
+func (a *V1ApiKeysAPIService) ListScopesExecute(r ApiListScopesRequest) (*ScopeListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -622,7 +622,7 @@ func (a *V1ApiKeysAPIService) ListScopesV1ApiKeysScopesGetExecute(r ApiListScope
 		localVarReturnValue *ScopeListResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.ListScopesV1ApiKeysScopesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.ListScopes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -763,27 +763,27 @@ func (a *V1ApiKeysAPIService) ListScopesV1ApiKeysScopesGetExecute(r ApiListScope
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRevokeApiKeyV1ApiKeysKeyIdDeleteRequest struct {
+type ApiRevokeApiKeyRequest struct {
 	ctx        context.Context
 	ApiService *V1ApiKeysAPIService
 	keyId      string
 }
 
-func (r ApiRevokeApiKeyV1ApiKeysKeyIdDeleteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.RevokeApiKeyV1ApiKeysKeyIdDeleteExecute(r)
+func (r ApiRevokeApiKeyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RevokeApiKeyExecute(r)
 }
 
 /*
-RevokeApiKeyV1ApiKeysKeyIdDelete Revoke an API key
+RevokeApiKey Revoke an API key
 
 Takes effect immediately. Revocation is a state, not a delete.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param keyId
-	@return ApiRevokeApiKeyV1ApiKeysKeyIdDeleteRequest
+	@return ApiRevokeApiKeyRequest
 */
-func (a *V1ApiKeysAPIService) RevokeApiKeyV1ApiKeysKeyIdDelete(ctx context.Context, keyId string) ApiRevokeApiKeyV1ApiKeysKeyIdDeleteRequest {
-	return ApiRevokeApiKeyV1ApiKeysKeyIdDeleteRequest{
+func (a *V1ApiKeysAPIService) RevokeApiKey(ctx context.Context, keyId string) ApiRevokeApiKeyRequest {
+	return ApiRevokeApiKeyRequest{
 		ApiService: a,
 		ctx:        ctx,
 		keyId:      keyId,
@@ -791,14 +791,14 @@ func (a *V1ApiKeysAPIService) RevokeApiKeyV1ApiKeysKeyIdDelete(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *V1ApiKeysAPIService) RevokeApiKeyV1ApiKeysKeyIdDeleteExecute(r ApiRevokeApiKeyV1ApiKeysKeyIdDeleteRequest) (*http.Response, error) {
+func (a *V1ApiKeysAPIService) RevokeApiKeyExecute(r ApiRevokeApiKeyRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.RevokeApiKeyV1ApiKeysKeyIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.RevokeApiKey")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -942,33 +942,33 @@ func (a *V1ApiKeysAPIService) RevokeApiKeyV1ApiKeysKeyIdDeleteExecute(r ApiRevok
 	return localVarHTTPResponse, nil
 }
 
-type ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest struct {
+type ApiRotateApiKeyRequest struct {
 	ctx                 context.Context
 	ApiService          *V1ApiKeysAPIService
 	keyId               string
 	apiKeyRotateRequest *ApiKeyRotateRequest
 }
 
-func (r ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest) ApiKeyRotateRequest(apiKeyRotateRequest ApiKeyRotateRequest) ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest {
+func (r ApiRotateApiKeyRequest) ApiKeyRotateRequest(apiKeyRotateRequest ApiKeyRotateRequest) ApiRotateApiKeyRequest {
 	r.apiKeyRotateRequest = &apiKeyRotateRequest
 	return r
 }
 
-func (r ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest) Execute() (*ApiKeyCreatedResponse, *http.Response, error) {
-	return r.ApiService.RotateApiKeyV1ApiKeysKeyIdRotatePostExecute(r)
+func (r ApiRotateApiKeyRequest) Execute() (*ApiKeyCreatedResponse, *http.Response, error) {
+	return r.ApiService.RotateApiKeyExecute(r)
 }
 
 /*
-RotateApiKeyV1ApiKeysKeyIdRotatePost Rotate an API key
+RotateApiKey Rotate an API key
 
 Issues a successor carrying the same name, scopes and environment. With `graceHours` the predecessor keeps working until the deadline, so a rotation is not an outage; with 0 it is revoked immediately.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param keyId
-	@return ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest
+	@return ApiRotateApiKeyRequest
 */
-func (a *V1ApiKeysAPIService) RotateApiKeyV1ApiKeysKeyIdRotatePost(ctx context.Context, keyId string) ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest {
-	return ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest{
+func (a *V1ApiKeysAPIService) RotateApiKey(ctx context.Context, keyId string) ApiRotateApiKeyRequest {
+	return ApiRotateApiKeyRequest{
 		ApiService: a,
 		ctx:        ctx,
 		keyId:      keyId,
@@ -978,7 +978,7 @@ func (a *V1ApiKeysAPIService) RotateApiKeyV1ApiKeysKeyIdRotatePost(ctx context.C
 // Execute executes the request
 //
 //	@return ApiKeyCreatedResponse
-func (a *V1ApiKeysAPIService) RotateApiKeyV1ApiKeysKeyIdRotatePostExecute(r ApiRotateApiKeyV1ApiKeysKeyIdRotatePostRequest) (*ApiKeyCreatedResponse, *http.Response, error) {
+func (a *V1ApiKeysAPIService) RotateApiKeyExecute(r ApiRotateApiKeyRequest) (*ApiKeyCreatedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -986,7 +986,7 @@ func (a *V1ApiKeysAPIService) RotateApiKeyV1ApiKeysKeyIdRotatePostExecute(r ApiR
 		localVarReturnValue *ApiKeyCreatedResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.RotateApiKeyV1ApiKeysKeyIdRotatePost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.RotateApiKey")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1144,25 +1144,25 @@ func (a *V1ApiKeysAPIService) RotateApiKeyV1ApiKeysKeyIdRotatePostExecute(r ApiR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiWhoamiV1WhoamiGetRequest struct {
+type ApiWhoamiRequest struct {
 	ctx        context.Context
 	ApiService *V1ApiKeysAPIService
 }
 
-func (r ApiWhoamiV1WhoamiGetRequest) Execute() (*WhoAmIResponse, *http.Response, error) {
-	return r.ApiService.WhoamiV1WhoamiGetExecute(r)
+func (r ApiWhoamiRequest) Execute() (*WhoAmIResponse, *http.Response, error) {
+	return r.ApiService.WhoamiExecute(r)
 }
 
 /*
-WhoamiV1WhoamiGet Describe the calling credential
+Whoami Describe the calling credential
 
 Accepts either a user access token or an API key. Useful for confirming which key an integration is actually using and what it is permitted to do.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiWhoamiV1WhoamiGetRequest
+	@return ApiWhoamiRequest
 */
-func (a *V1ApiKeysAPIService) WhoamiV1WhoamiGet(ctx context.Context) ApiWhoamiV1WhoamiGetRequest {
-	return ApiWhoamiV1WhoamiGetRequest{
+func (a *V1ApiKeysAPIService) Whoami(ctx context.Context) ApiWhoamiRequest {
+	return ApiWhoamiRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -1171,7 +1171,7 @@ func (a *V1ApiKeysAPIService) WhoamiV1WhoamiGet(ctx context.Context) ApiWhoamiV1
 // Execute executes the request
 //
 //	@return WhoAmIResponse
-func (a *V1ApiKeysAPIService) WhoamiV1WhoamiGetExecute(r ApiWhoamiV1WhoamiGetRequest) (*WhoAmIResponse, *http.Response, error) {
+func (a *V1ApiKeysAPIService) WhoamiExecute(r ApiWhoamiRequest) (*WhoAmIResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -1179,7 +1179,7 @@ func (a *V1ApiKeysAPIService) WhoamiV1WhoamiGetExecute(r ApiWhoamiV1WhoamiGetReq
 		localVarReturnValue *WhoAmIResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.WhoamiV1WhoamiGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1ApiKeysAPIService.Whoami")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

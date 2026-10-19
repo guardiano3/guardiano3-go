@@ -23,29 +23,29 @@ import (
 // V1OrgAPIService V1OrgAPI service
 type V1OrgAPIService service
 
-type ApiAcceptInvitationV1OrgAcceptInvitationPostRequest struct {
+type ApiAcceptInvitationRequest struct {
 	ctx                     context.Context
 	ApiService              *V1OrgAPIService
 	acceptInvitationRequest *AcceptInvitationRequest
 }
 
-func (r ApiAcceptInvitationV1OrgAcceptInvitationPostRequest) AcceptInvitationRequest(acceptInvitationRequest AcceptInvitationRequest) ApiAcceptInvitationV1OrgAcceptInvitationPostRequest {
+func (r ApiAcceptInvitationRequest) AcceptInvitationRequest(acceptInvitationRequest AcceptInvitationRequest) ApiAcceptInvitationRequest {
 	r.acceptInvitationRequest = &acceptInvitationRequest
 	return r
 }
 
-func (r ApiAcceptInvitationV1OrgAcceptInvitationPostRequest) Execute() (*OrgMemberResponse, *http.Response, error) {
-	return r.ApiService.AcceptInvitationV1OrgAcceptInvitationPostExecute(r)
+func (r ApiAcceptInvitationRequest) Execute() (*OrgMemberResponse, *http.Response, error) {
+	return r.ApiService.AcceptInvitationExecute(r)
 }
 
 /*
-AcceptInvitationV1OrgAcceptInvitationPost Accept an organization invitation
+AcceptInvitation Accept an organization invitation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiAcceptInvitationV1OrgAcceptInvitationPostRequest
+	@return ApiAcceptInvitationRequest
 */
-func (a *V1OrgAPIService) AcceptInvitationV1OrgAcceptInvitationPost(ctx context.Context) ApiAcceptInvitationV1OrgAcceptInvitationPostRequest {
-	return ApiAcceptInvitationV1OrgAcceptInvitationPostRequest{
+func (a *V1OrgAPIService) AcceptInvitation(ctx context.Context) ApiAcceptInvitationRequest {
+	return ApiAcceptInvitationRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -54,7 +54,7 @@ func (a *V1OrgAPIService) AcceptInvitationV1OrgAcceptInvitationPost(ctx context.
 // Execute executes the request
 //
 //	@return OrgMemberResponse
-func (a *V1OrgAPIService) AcceptInvitationV1OrgAcceptInvitationPostExecute(r ApiAcceptInvitationV1OrgAcceptInvitationPostRequest) (*OrgMemberResponse, *http.Response, error) {
+func (a *V1OrgAPIService) AcceptInvitationExecute(r ApiAcceptInvitationRequest) (*OrgMemberResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -62,7 +62,7 @@ func (a *V1OrgAPIService) AcceptInvitationV1OrgAcceptInvitationPostExecute(r Api
 		localVarReturnValue *OrgMemberResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.AcceptInvitationV1OrgAcceptInvitationPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.AcceptInvitation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -208,25 +208,25 @@ func (a *V1OrgAPIService) AcceptInvitationV1OrgAcceptInvitationPostExecute(r Api
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiCancelInvitationV1OrgInvitationsInvitationIdDeleteRequest struct {
+type ApiCancelInvitationRequest struct {
 	ctx          context.Context
 	ApiService   *V1OrgAPIService
 	invitationId string
 }
 
-func (r ApiCancelInvitationV1OrgInvitationsInvitationIdDeleteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.CancelInvitationV1OrgInvitationsInvitationIdDeleteExecute(r)
+func (r ApiCancelInvitationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CancelInvitationExecute(r)
 }
 
 /*
-CancelInvitationV1OrgInvitationsInvitationIdDelete Cancel an invitation
+CancelInvitation Cancel an invitation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param invitationId
-	@return ApiCancelInvitationV1OrgInvitationsInvitationIdDeleteRequest
+	@return ApiCancelInvitationRequest
 */
-func (a *V1OrgAPIService) CancelInvitationV1OrgInvitationsInvitationIdDelete(ctx context.Context, invitationId string) ApiCancelInvitationV1OrgInvitationsInvitationIdDeleteRequest {
-	return ApiCancelInvitationV1OrgInvitationsInvitationIdDeleteRequest{
+func (a *V1OrgAPIService) CancelInvitation(ctx context.Context, invitationId string) ApiCancelInvitationRequest {
+	return ApiCancelInvitationRequest{
 		ApiService:   a,
 		ctx:          ctx,
 		invitationId: invitationId,
@@ -234,14 +234,14 @@ func (a *V1OrgAPIService) CancelInvitationV1OrgInvitationsInvitationIdDelete(ctx
 }
 
 // Execute executes the request
-func (a *V1OrgAPIService) CancelInvitationV1OrgInvitationsInvitationIdDeleteExecute(r ApiCancelInvitationV1OrgInvitationsInvitationIdDeleteRequest) (*http.Response, error) {
+func (a *V1OrgAPIService) CancelInvitationExecute(r ApiCancelInvitationRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.CancelInvitationV1OrgInvitationsInvitationIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.CancelInvitation")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -385,23 +385,23 @@ func (a *V1OrgAPIService) CancelInvitationV1OrgInvitationsInvitationIdDeleteExec
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetOrgV1OrgGetRequest struct {
+type ApiGetOrgRequest struct {
 	ctx        context.Context
 	ApiService *V1OrgAPIService
 }
 
-func (r ApiGetOrgV1OrgGetRequest) Execute() (*OrgResponse, *http.Response, error) {
-	return r.ApiService.GetOrgV1OrgGetExecute(r)
+func (r ApiGetOrgRequest) Execute() (*OrgResponse, *http.Response, error) {
+	return r.ApiService.GetOrgExecute(r)
 }
 
 /*
-GetOrgV1OrgGet Get current organization
+GetOrg Get current organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetOrgV1OrgGetRequest
+	@return ApiGetOrgRequest
 */
-func (a *V1OrgAPIService) GetOrgV1OrgGet(ctx context.Context) ApiGetOrgV1OrgGetRequest {
-	return ApiGetOrgV1OrgGetRequest{
+func (a *V1OrgAPIService) GetOrg(ctx context.Context) ApiGetOrgRequest {
+	return ApiGetOrgRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -410,7 +410,7 @@ func (a *V1OrgAPIService) GetOrgV1OrgGet(ctx context.Context) ApiGetOrgV1OrgGetR
 // Execute executes the request
 //
 //	@return OrgResponse
-func (a *V1OrgAPIService) GetOrgV1OrgGetExecute(r ApiGetOrgV1OrgGetRequest) (*OrgResponse, *http.Response, error) {
+func (a *V1OrgAPIService) GetOrgExecute(r ApiGetOrgRequest) (*OrgResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -418,7 +418,7 @@ func (a *V1OrgAPIService) GetOrgV1OrgGetExecute(r ApiGetOrgV1OrgGetRequest) (*Or
 		localVarReturnValue *OrgResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.GetOrgV1OrgGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.GetOrg")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -559,29 +559,29 @@ func (a *V1OrgAPIService) GetOrgV1OrgGetExecute(r ApiGetOrgV1OrgGetRequest) (*Or
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiInviteMemberV1OrgInvitationsPostRequest struct {
+type ApiInviteMemberRequest struct {
 	ctx                 context.Context
 	ApiService          *V1OrgAPIService
 	inviteMemberRequest *InviteMemberRequest
 }
 
-func (r ApiInviteMemberV1OrgInvitationsPostRequest) InviteMemberRequest(inviteMemberRequest InviteMemberRequest) ApiInviteMemberV1OrgInvitationsPostRequest {
+func (r ApiInviteMemberRequest) InviteMemberRequest(inviteMemberRequest InviteMemberRequest) ApiInviteMemberRequest {
 	r.inviteMemberRequest = &inviteMemberRequest
 	return r
 }
 
-func (r ApiInviteMemberV1OrgInvitationsPostRequest) Execute() (*InvitationResponse, *http.Response, error) {
-	return r.ApiService.InviteMemberV1OrgInvitationsPostExecute(r)
+func (r ApiInviteMemberRequest) Execute() (*InvitationResponse, *http.Response, error) {
+	return r.ApiService.InviteMemberExecute(r)
 }
 
 /*
-InviteMemberV1OrgInvitationsPost Invite a member
+InviteMember Invite a member
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiInviteMemberV1OrgInvitationsPostRequest
+	@return ApiInviteMemberRequest
 */
-func (a *V1OrgAPIService) InviteMemberV1OrgInvitationsPost(ctx context.Context) ApiInviteMemberV1OrgInvitationsPostRequest {
-	return ApiInviteMemberV1OrgInvitationsPostRequest{
+func (a *V1OrgAPIService) InviteMember(ctx context.Context) ApiInviteMemberRequest {
+	return ApiInviteMemberRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -590,7 +590,7 @@ func (a *V1OrgAPIService) InviteMemberV1OrgInvitationsPost(ctx context.Context) 
 // Execute executes the request
 //
 //	@return InvitationResponse
-func (a *V1OrgAPIService) InviteMemberV1OrgInvitationsPostExecute(r ApiInviteMemberV1OrgInvitationsPostRequest) (*InvitationResponse, *http.Response, error) {
+func (a *V1OrgAPIService) InviteMemberExecute(r ApiInviteMemberRequest) (*InvitationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
@@ -598,7 +598,7 @@ func (a *V1OrgAPIService) InviteMemberV1OrgInvitationsPostExecute(r ApiInviteMem
 		localVarReturnValue *InvitationResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.InviteMemberV1OrgInvitationsPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.InviteMember")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -744,23 +744,23 @@ func (a *V1OrgAPIService) InviteMemberV1OrgInvitationsPostExecute(r ApiInviteMem
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListInvitationsV1OrgInvitationsGetRequest struct {
+type ApiListInvitationsRequest struct {
 	ctx        context.Context
 	ApiService *V1OrgAPIService
 }
 
-func (r ApiListInvitationsV1OrgInvitationsGetRequest) Execute() (*InvitationListResponse, *http.Response, error) {
-	return r.ApiService.ListInvitationsV1OrgInvitationsGetExecute(r)
+func (r ApiListInvitationsRequest) Execute() (*InvitationListResponse, *http.Response, error) {
+	return r.ApiService.ListInvitationsExecute(r)
 }
 
 /*
-ListInvitationsV1OrgInvitationsGet List pending invitations
+ListInvitations List pending invitations
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListInvitationsV1OrgInvitationsGetRequest
+	@return ApiListInvitationsRequest
 */
-func (a *V1OrgAPIService) ListInvitationsV1OrgInvitationsGet(ctx context.Context) ApiListInvitationsV1OrgInvitationsGetRequest {
-	return ApiListInvitationsV1OrgInvitationsGetRequest{
+func (a *V1OrgAPIService) ListInvitations(ctx context.Context) ApiListInvitationsRequest {
+	return ApiListInvitationsRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -769,7 +769,7 @@ func (a *V1OrgAPIService) ListInvitationsV1OrgInvitationsGet(ctx context.Context
 // Execute executes the request
 //
 //	@return InvitationListResponse
-func (a *V1OrgAPIService) ListInvitationsV1OrgInvitationsGetExecute(r ApiListInvitationsV1OrgInvitationsGetRequest) (*InvitationListResponse, *http.Response, error) {
+func (a *V1OrgAPIService) ListInvitationsExecute(r ApiListInvitationsRequest) (*InvitationListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -777,7 +777,7 @@ func (a *V1OrgAPIService) ListInvitationsV1OrgInvitationsGetExecute(r ApiListInv
 		localVarReturnValue *InvitationListResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.ListInvitationsV1OrgInvitationsGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.ListInvitations")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -918,23 +918,23 @@ func (a *V1OrgAPIService) ListInvitationsV1OrgInvitationsGetExecute(r ApiListInv
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListMembersV1OrgMembersGetRequest struct {
+type ApiListMembersRequest struct {
 	ctx        context.Context
 	ApiService *V1OrgAPIService
 }
 
-func (r ApiListMembersV1OrgMembersGetRequest) Execute() (*OrgMemberListResponse, *http.Response, error) {
-	return r.ApiService.ListMembersV1OrgMembersGetExecute(r)
+func (r ApiListMembersRequest) Execute() (*OrgMemberListResponse, *http.Response, error) {
+	return r.ApiService.ListMembersExecute(r)
 }
 
 /*
-ListMembersV1OrgMembersGet List organization members
+ListMembers List organization members
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListMembersV1OrgMembersGetRequest
+	@return ApiListMembersRequest
 */
-func (a *V1OrgAPIService) ListMembersV1OrgMembersGet(ctx context.Context) ApiListMembersV1OrgMembersGetRequest {
-	return ApiListMembersV1OrgMembersGetRequest{
+func (a *V1OrgAPIService) ListMembers(ctx context.Context) ApiListMembersRequest {
+	return ApiListMembersRequest{
 		ApiService: a,
 		ctx:        ctx,
 	}
@@ -943,7 +943,7 @@ func (a *V1OrgAPIService) ListMembersV1OrgMembersGet(ctx context.Context) ApiLis
 // Execute executes the request
 //
 //	@return OrgMemberListResponse
-func (a *V1OrgAPIService) ListMembersV1OrgMembersGetExecute(r ApiListMembersV1OrgMembersGetRequest) (*OrgMemberListResponse, *http.Response, error) {
+func (a *V1OrgAPIService) ListMembersExecute(r ApiListMembersRequest) (*OrgMemberListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
@@ -951,7 +951,7 @@ func (a *V1OrgAPIService) ListMembersV1OrgMembersGetExecute(r ApiListMembersV1Or
 		localVarReturnValue *OrgMemberListResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.ListMembersV1OrgMembersGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.ListMembers")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1092,25 +1092,25 @@ func (a *V1OrgAPIService) ListMembersV1OrgMembersGetExecute(r ApiListMembersV1Or
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRemoveMemberV1OrgMembersUserIdDeleteRequest struct {
+type ApiRemoveMemberRequest struct {
 	ctx        context.Context
 	ApiService *V1OrgAPIService
 	userId     string
 }
 
-func (r ApiRemoveMemberV1OrgMembersUserIdDeleteRequest) Execute() (*http.Response, error) {
-	return r.ApiService.RemoveMemberV1OrgMembersUserIdDeleteExecute(r)
+func (r ApiRemoveMemberRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RemoveMemberExecute(r)
 }
 
 /*
-RemoveMemberV1OrgMembersUserIdDelete Remove a member
+RemoveMember Remove a member
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param userId
-	@return ApiRemoveMemberV1OrgMembersUserIdDeleteRequest
+	@return ApiRemoveMemberRequest
 */
-func (a *V1OrgAPIService) RemoveMemberV1OrgMembersUserIdDelete(ctx context.Context, userId string) ApiRemoveMemberV1OrgMembersUserIdDeleteRequest {
-	return ApiRemoveMemberV1OrgMembersUserIdDeleteRequest{
+func (a *V1OrgAPIService) RemoveMember(ctx context.Context, userId string) ApiRemoveMemberRequest {
+	return ApiRemoveMemberRequest{
 		ApiService: a,
 		ctx:        ctx,
 		userId:     userId,
@@ -1118,14 +1118,14 @@ func (a *V1OrgAPIService) RemoveMemberV1OrgMembersUserIdDelete(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *V1OrgAPIService) RemoveMemberV1OrgMembersUserIdDeleteExecute(r ApiRemoveMemberV1OrgMembersUserIdDeleteRequest) (*http.Response, error) {
+func (a *V1OrgAPIService) RemoveMemberExecute(r ApiRemoveMemberRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod = http.MethodDelete
 		localVarPostBody   interface{}
 		formFiles          []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.RemoveMemberV1OrgMembersUserIdDelete")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.RemoveMember")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1269,31 +1269,31 @@ func (a *V1OrgAPIService) RemoveMemberV1OrgMembersUserIdDeleteExecute(r ApiRemov
 	return localVarHTTPResponse, nil
 }
 
-type ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest struct {
+type ApiUpdateMemberRoleRequest struct {
 	ctx                     context.Context
 	ApiService              *V1OrgAPIService
 	userId                  string
 	updateMemberRoleRequest *UpdateMemberRoleRequest
 }
 
-func (r ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest) UpdateMemberRoleRequest(updateMemberRoleRequest UpdateMemberRoleRequest) ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest {
+func (r ApiUpdateMemberRoleRequest) UpdateMemberRoleRequest(updateMemberRoleRequest UpdateMemberRoleRequest) ApiUpdateMemberRoleRequest {
 	r.updateMemberRoleRequest = &updateMemberRoleRequest
 	return r
 }
 
-func (r ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest) Execute() (*OrgMemberResponse, *http.Response, error) {
-	return r.ApiService.UpdateMemberRoleV1OrgMembersUserIdPatchExecute(r)
+func (r ApiUpdateMemberRoleRequest) Execute() (*OrgMemberResponse, *http.Response, error) {
+	return r.ApiService.UpdateMemberRoleExecute(r)
 }
 
 /*
-UpdateMemberRoleV1OrgMembersUserIdPatch Change a member's role
+UpdateMemberRole Change a member's role
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param userId
-	@return ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest
+	@return ApiUpdateMemberRoleRequest
 */
-func (a *V1OrgAPIService) UpdateMemberRoleV1OrgMembersUserIdPatch(ctx context.Context, userId string) ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest {
-	return ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest{
+func (a *V1OrgAPIService) UpdateMemberRole(ctx context.Context, userId string) ApiUpdateMemberRoleRequest {
+	return ApiUpdateMemberRoleRequest{
 		ApiService: a,
 		ctx:        ctx,
 		userId:     userId,
@@ -1303,7 +1303,7 @@ func (a *V1OrgAPIService) UpdateMemberRoleV1OrgMembersUserIdPatch(ctx context.Co
 // Execute executes the request
 //
 //	@return OrgMemberResponse
-func (a *V1OrgAPIService) UpdateMemberRoleV1OrgMembersUserIdPatchExecute(r ApiUpdateMemberRoleV1OrgMembersUserIdPatchRequest) (*OrgMemberResponse, *http.Response, error) {
+func (a *V1OrgAPIService) UpdateMemberRoleExecute(r ApiUpdateMemberRoleRequest) (*OrgMemberResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPatch
 		localVarPostBody    interface{}
@@ -1311,7 +1311,7 @@ func (a *V1OrgAPIService) UpdateMemberRoleV1OrgMembersUserIdPatchExecute(r ApiUp
 		localVarReturnValue *OrgMemberResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.UpdateMemberRoleV1OrgMembersUserIdPatch")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "V1OrgAPIService.UpdateMemberRole")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
