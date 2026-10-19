@@ -5,7 +5,7 @@
 
 The official Go client for the [GuardianO3](https://guardiano3.com) API:
 real-time fraud intelligence for phone calls. Send a transcript, an audio clip
-or a live call, and get a risk decision back.
+or stream live audio, and get a risk decision back.
 
 You need an API key from the developer console at
 [guardiano3.com](https://guardiano3.com).
@@ -21,7 +21,7 @@ Go 1.23+. One module, three packages:
 | Package | What it is |
 |---|---|
 | `github.com/guardiano3/guardiano3-go/client` | **Hand-written**: the transport (auth, idempotency, retries), typed errors, pagination |
-| `github.com/guardiano3/guardiano3-go/live` | **Hand-written**: live-call WebSocket sessions |
+| `github.com/guardiano3/guardiano3-go/live` | **Hand-written**: live-session WebSocket channels |
 | `github.com/guardiano3/guardiano3-go/generated` | **Generated** (package `guardiano3`) from `openapi/v1.json` by `scripts/generate.sh`. Never edited by hand |
 
 **`client` imports nothing but the standard library** — not even `generated`.
@@ -196,7 +196,7 @@ giving no cursor to reach it, and looping on that spins forever.
 
 ## WebSocket / Live Sessions
 
-The `live` package manages the two WebSocket channels for real-time call
+The `live` package manages the two WebSocket channels for real-time session
 analysis. It is the only package that uses a third-party library,
 `github.com/coder/websocket`; `client` stays standard-library only.
 
@@ -263,7 +263,7 @@ func main() {
 | `OnDecision` | `decision` | Scored chunk; `pending` verification means an update follows |
 | `OnDecisionUpdate` | `decisionUpdate` | Final decision for a chunk first sent as `pending`; replace it in place |
 | `OnLagging` | `lagging` | Audio arriving faster than transcription |
-| `OnDegraded` | `degraded` | Part of the call was not transcribed; no decision covers it. Not fatal: do not read a quiet stream as a safe call (`DegradedReason`, `UnheardSeconds`, `TotalUnheardSeconds`) |
+| `OnDegraded` | `degraded` | Part of the audio was not analysed; no decision covers it. Not fatal: do not read a quiet stream as a safe session (`DegradedReason`, `UnheardSeconds`, `TotalUnheardSeconds`) |
 | `OnError` | `error` | Fatal; server closes after sending |
 | `OnDisconnect` | — | Either WebSocket closed or failed |
 
@@ -287,4 +287,4 @@ The licence covers this SDK's source code. Using the GuardianO3 API requires an
 API key and acceptance of the [Terms of Service](https://guardiano3.com/terms).
 
 Security issues: see [SECURITY](https://github.com/guardiano3/.github/blob/main/SECURITY.md).
-Never put API keys, call audio or transcripts in an issue.
+Never put API keys, session audio or transcripts in an issue.
