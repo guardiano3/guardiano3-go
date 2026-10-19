@@ -30,7 +30,7 @@
         "type": "object"
       },
       "AccountDeleteRequest": {
-        "description": "Confirmation for an irreversible deletion.\n\n`currentPassword` is optional in the schema and required in practice for any\naccount that has one -- an OAuth-only account has no password to check, and\na schema-level `required` would make the request impossible to satisfy for\nthose users. The server decides; see `IdentityService.delete_account`.\n\n`confirm` must be the literal string `DELETE`. It is not security -- anyone\nwho can send the password can send the word -- it is there so that a\nmis-wired client cannot delete an account by calling the wrong endpoint with\nan empty body.",
+        "description": "Confirmation for an irreversible deletion.\n\n`currentPassword` is required for an account that has a password. An\naccount that has only ever signed in with a provider has no password to\ncheck, and omits it.\n\n`confirm` must be the literal string `DELETE`. It is not security -- anyone\nwho can send the password can send the word -- it is there so that a\nmis-wired client cannot delete an account by calling the wrong endpoint with\nan empty body.",
         "properties": {
           "confirm": {
             "description": "Must be the literal string \"DELETE\".",
@@ -500,7 +500,7 @@
         "type": "object"
       },
       "AuthSessionResponse": {
-        "description": "A signed-in session (a device), not an analysis session.\n\nNamed to disambiguate from `product.SessionResponse`, which is an analysis\nsession. Two Pydantic classes sharing a name is invisible on the server but\nproduces `SchemasV1AuthSessionResponse` as a generated SDK type -- the\ncontract's names are part of its public surface.",
+        "description": "A signed-in session (a device), not an analysis session (`SessionResponse`).",
         "properties": {
           "createdAt": {
             "format": "date-time",
@@ -1324,7 +1324,7 @@
                 "type": "array"
               },
               "docsUrl": {
-                "description": "Deep link to the error-code entry in the published errors reference. Present only when the deployment has `ERROR_DOCS_BASE_URL` configured; omitted otherwise rather than sent blank.",
+                "description": "Deep link to the error-code entry in the published errors reference. Omitted, rather than sent blank, when there is no entry to link to.",
                 "example": "https://guardiano3.com/docs/errors#not_found",
                 "type": "string"
               },
@@ -2013,7 +2013,7 @@
         "type": "object"
       },
       "ProfileUpdateRequest": {
-        "description": "A PATCH: omit a field to leave it alone. `null` is not a way to clear one.\n\nBoth fields were nullable and both crashed the endpoint with a 500 —\n`{\"name\": null}` violated the column's NOT NULL on commit, and\n`{\"settings\": null}` made the service iterate a `None`. Any authenticated\ncaller could do it, and the contract said both were acceptable.\n\nRejecting an explicit null turns those into the 422 the contract already\ndeclares. Nothing is lost: neither field has a meaningful empty state — you\ncannot have no name, and \"no settings\" is not a setting. `exclude_unset` in\nthe handler is what still distinguishes \"not supplied\" from \"supplied\", so\nomission continues to mean \"leave it alone\".\n\nFound by `tests/integration/test_contract_conformance.py`, which generates\nexactly this kind of payload and is why property-based testing earns its\nplace next to hand-written cases.",
+        "description": "A PATCH: omit a field to leave it alone. `null` is not a way to clear one.\n\nAn explicit `null` is refused with `422`. Neither field has an empty state:\nan account always has a name, and \"no settings\" is not a setting.",
         "properties": {
           "name": {
             "anyOf": [
@@ -2784,6 +2784,7 @@
                 "type": "null"
               }
             ],
+            "description": "Opaque version label of the assessment that produced this verdict. It changes when the assessment changes. Null when not assessed.",
             "title": "Model"
           },
           "status": {
@@ -2812,7 +2813,7 @@
         "type": "object"
       },
       "WebSessionResponse": {
-        "description": "Browser login response (ADR-018). No refresh token — it travels in a cookie.",
+        "description": "Browser sign-in response. No refresh token in the body — it is set as a cookie.",
         "properties": {
           "accessToken": {
             "title": "Accesstoken",
@@ -3064,7 +3065,7 @@
     },
     "/v1/analyze/audio": {
       "post": {
-        "description": "Requires the `analysis:write` scope. Uploads are capped at `ANALYZE_MAX_UPLOAD_BYTES` and must carry an audio content type. Clips longer than `ANALYZE_MAX_AUDIO_SECONDS` (120 s by default) are refused with `413`, not truncated -- send the part of the audio to be scored, or stream live audio over the session WebSockets in real time. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.\n\n`Idempotency-Key` is **not** supported here: fingerprinting the payload would mean holding and hashing the whole upload a second time, which doubles the memory cost of the largest request the API accepts. Retry safety for audio comes from the request being stateless -- the audio is not persisted, so a duplicate costs a re-analysis (and counts as a second analysis in analytics), not a duplicate record of the audio.",
+        "description": "Requires the `analysis:write` scope. Uploads must carry an audio content type. Uploads larger than 25 MiB and clips longer than 120 seconds are refused with `413`, not truncated -- send the part of the audio to be scored, or stream live audio over the session WebSockets in real time. WAV, MP3, FLAC, OGG, MP4/M4A and WebM are decoded and resampled server-side; a file that cannot be decoded is refused with `415`. If transcription fails the response is `502` (or `504` on a timeout) -- never a low-risk verdict on audio that was not heard.\n\n`Idempotency-Key` is **not** supported here. Retrying is safe: the audio is not stored, so a duplicate request is analysed again (and counts as a second analysis in analytics) without creating a duplicate record of the audio.",
         "operationId": "analyze_audio_v1_analyze_audio_post",
         "requestBody": {
           "content": {
