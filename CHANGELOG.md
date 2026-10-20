@@ -3,7 +3,7 @@
 All notable changes to this SDK. Versions follow [semver](https://semver.org/);
 while the version is 0.x, a minor release may contain breaking changes.
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-20)
 
 - First release, as one module, `github.com/guardiano3/guardiano3-go`:
   generated models and operations for the GuardianO3 `/v1` API (`generated`),
