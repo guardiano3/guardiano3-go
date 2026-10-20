@@ -75,6 +75,7 @@ model_session_created_response.go
 model_session_list_response.go
 model_session_response.go
 model_site_accepted_response.go
+model_site_feedback_request.go
 model_subscribe_request.go
 model_subscription_status_response.go
 model_subscription_token_request.go
